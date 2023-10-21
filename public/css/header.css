@@ -1,0 +1,32 @@
+.header {
+            font-family: Arial, sans-serif;
+            font-size: 16x;
+            background-color: black; 
+            display: flex; align-items: center; 
+            width: 100%;
+            
+            top: 0;
+            height: 128px;
+            margin: 0px 0px 24px 0px;
+}
+
+.navButtons
+{
+    width: 100%;
+    margin: 0px 50px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navMenu
+{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.navTitle
+{
+    font-size: 32px;
+}

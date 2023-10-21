@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ProjectsController;
 
 
 /*
@@ -16,10 +17,8 @@ use App\Http\Controllers\ItemController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view("home");
-});
+Route::get('/', [ProjectsController::class, 'listUniqueItems']);
+Route::get('/home', [ProjectsController::class, 'listUniqueItems']);
 
 Route::get('/about', function () {
     return view('about');
@@ -28,7 +27,8 @@ Route::get('/contacts', function () {
     return view('contacts');
 });
 
-Route::view('/home', 'home');
+
+
 
 Route::get('/restricted', function () {
     return view('restricted.denied');

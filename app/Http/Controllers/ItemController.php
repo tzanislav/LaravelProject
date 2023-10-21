@@ -11,52 +11,62 @@ class ItemController extends Controller
     //
     function show()
     {
-        $items = Product::paginate(50);
-        return view('list', ['products'=>$items]);
+        if (session()->has( 'user' )) {
+            $data = Product::paginate(50);
+
+            return view( 'list', ['products' => $data] );
+        } else {
+            return redirect( 'login' );
+        }
     }
+
 
     public function filter(Request $request)
     {
-        $filter = $request->input('filter');
-        if(!$filter) {
-            return redirect('list');
+        $filter = $request->input( 'filter' );
+        if (!$filter) {
+            return redirect( 'list' );
         }
-    
+
         // Extract the filter criteria from the URL parameter
-        $filterParts = explode(':', $filter);
+        $filterParts = explode( ':', $filter );
         $filterField = $filterParts[0];
         $filterValue = $filterParts[1];
-    
-        // You can add validation and sanitation for the filter input here
-    
-        // Build the query to filter based on the provided field and value
-        $items = Product::where($filterField, $filterValue)
-                    ->orderBy("company", "desc")
-                    ->paginate(20);
 
-        $items->appends(['filter' => $filter]);         
-        return view('list', ['products' => $items, 'filter' => $filter, 'paginationURL ']);
+        // You can add validation and sanitation for the filter input here
+
+        // Build the query to filter based on the provided field and value
+        $items = Product::where( $filterField, $filterValue )
+            ->orderBy( "company", "desc" )
+            ->paginate( 20 );
+
+        $items->appends( ['filter' => $filter] );
+        return view( 'list', ['products' => $items, 'filter' => $filter, 'paginationURL '] );
     }
-    
+
 
 
     function destroy($id)
     {
-        $data = Product::find($id);
-        $data->delete();
-        echo "<script>console.log('ID: ".$id."')</script>";
-        return redirect('list');
+        if (session()->has( 'user' )) {
+            $data = Product::find( $id );
+            $data->delete();
+            echo "<script>console.log('ID: " . $id . "')</script>";
+            return redirect( 'list' );
+        } else {
+            return redirect( 'login' );
+        }
     }
 
     function AddItem(Request $req)
     {
-        $req->validate([
+        $req->validate( [
             'name' => 'required',
             'count' => 'required',
             'category' => 'required',
             // Add validation rules for other fields as needed
-        ]);
-    
+        ] );
+
         $item = new Product;
         $item->name = $req->name;
         $item->room = $req->room;
@@ -70,29 +80,30 @@ class ItemController extends Controller
         $item->created_at = now();
         $item->updated_at = now();
         $item->save();
-    
-        return redirect('list');
+
+        return redirect( 'list' );
     }
 
-    public function search(Request $request) {
-        $search = $request->input('search');
-    
-        $products = Product::where(function($query) use ($search) {
-            $query->where('itemName', 'like', '%' . $search . '%')
-                  ->orWhere('category', 'like', '%' . $search . '%')
-                  ->orWhere('description', 'like', '%' . $search . '%')
-                  ->orWhere('company', 'like', '%' . $search . '%');
-                })->paginate(10)->setPath('search') ;                  
-        
-        $products->appends(['search' => $search]);
+    public function search(Request $request)
+    {
+        $search = $request->input( 'search' );
 
-        return view('list', ['products' => $products, 'search' => $search]);
+        $products = Product::where( function ($query) use ($search) {
+            $query->where( 'itemName', 'like', '%' . $search . '%' )
+                ->orWhere( 'category', 'like', '%' . $search . '%' )
+                ->orWhere( 'description', 'like', '%' . $search . '%' )
+                ->orWhere( 'company', 'like', '%' . $search . '%' );
+        } )->paginate( 10 )->setPath( 'search' );
+
+        $products->appends( ['search' => $search] );
+
+        return view( 'list', ['products' => $products, 'search' => $search] );
     }
-    
-    
 
-     function Test (Request $req)
-     {
+
+
+    function Test(Request $req)
+    {
         return $req->input();
-     }
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Animal;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
 class UsersController extends Controller
@@ -16,19 +16,12 @@ class UsersController extends Controller
 
     function Index()
     {
-        if(session()->has('user'))
-        {
-            return redirect('home');
-        }
         return view('login');
     }
 
     function Submit (Request $req)
     {
-        $req->validate([
-            'first_name' => 'required|unique:users,name',
-            'email' => 'required|email|unique:users,email',
-        ]);
+
         
 
 
@@ -42,6 +35,10 @@ class UsersController extends Controller
 
     function Login (Request $req)
     {
+        $req->validate([
+            'first_name' => 'exists:users,name',
+            'email' => 'required|email|unique:users,email',
+        ]);
         $data = $req->input();
         $req->session()->put('user', $data['email']);
         return redirect('home');
@@ -49,12 +46,17 @@ class UsersController extends Controller
 
     function AddMember (Request $req)
     {
-        $user = new Animal;
+        $user = new User;
+
+        $req->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+        ]);
 
         $user->name = $req->name;
         $user->email = $req->email;
         $user->save();
-        return redirect('AddMember');
+        return redirect('home');
      }
 
 
