@@ -26,7 +26,7 @@
             <div class="container">
                 <ul>
                     @foreach($uniqueItems as $item)
-                        <li>{{ $item->column_name }}</li>
+                    <li><a href="/list/{{$item->project}}">{{$item->project}}</a></li>      
                     @endforeach
                 </ul>
             </div>

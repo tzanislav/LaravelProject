@@ -11,7 +11,8 @@ class ProjectsController extends Controller
     public function listUniqueItems()
     {
         $uniqueItems = Product::select('project')->distinct()->get();
+        $testTitle = "Test Title";
 
-        return view( 'home', ['uniqueItems' => $uniqueItems] );
+        return view( 'home', compact( 'uniqueItems', 'testTitle') );
     }
 }

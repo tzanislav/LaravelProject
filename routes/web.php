@@ -62,6 +62,8 @@ Route::post('/AddItem', [ItemController::class, 'AddItem']);
 Route::get('/filter', [ItemController::class, 'filter']);
 Route::get('/search',  [ItemController::class, 'search']);
 
+Route::get('/list/{project}', [ItemController::class, 'setProject']);
+
 
 
 

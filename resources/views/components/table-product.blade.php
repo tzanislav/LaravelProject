@@ -1,5 +1,7 @@
 @props(['fieldName', 'item'])
 
+
+
 @if($item->id%2 == 0)
     <tr class="even">
 @else
@@ -15,7 +17,7 @@
     <td class="column7"><x-filter-button fieldName="company" :item="$item" /></td>
     <td class="column8"><x-filter-button fieldName="provider" :item="$item" /></td>
     <td class="column9">{{$item->description}}</td>
-    <td class="column10"><x-filter-button fieldName="status" :item="$item" /></td>
+    <td class="column10"><x-status-button fieldName="status" :item="$item" /></td>
     <td class="column11">{{$item->proforma}}</td>
     <td class="column12"><x-filter-button fieldName="owner" :item="$item" /></td>
     <td class="column13"><button onClick="ShowDeleteBox({{$item->id}}, '{{$item->itemName}}');">Delete</button></td>

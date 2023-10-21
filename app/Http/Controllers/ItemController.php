@@ -6,15 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
+
+
 class ItemController extends Controller
 {
+    
     //
     function show()
     {
-        if (session()->has( 'user' )) {
-            $data = Product::paginate(50);
+        $currentProject = session()->get( 'project' );
 
-            return view( 'list', ['products' => $data] );
+        if (session()->has( 'user' )) {
+            $data = Product::where( 'project', $currentProject )->paginate(50);
+
+            return view( 'list', ['products' => $data], ['currentProject' => $currentProject] );
         } else {
             return redirect( 'login' );
         }
@@ -37,8 +42,9 @@ class ItemController extends Controller
 
         // Build the query to filter based on the provided field and value
         $items = Product::where( $filterField, $filterValue )
-            ->orderBy( "company", "desc" )
-            ->paginate( 20 );
+            ->where( 'project', session()->get( 'project' ) )
+            ->orderBy( "room", "desc" )
+            ->paginate( 50 );
 
         $items->appends( ['filter' => $filter] );
         return view( 'list', ['products' => $items, 'filter' => $filter, 'paginationURL '] );
@@ -86,18 +92,24 @@ class ItemController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input( 'search' );
-
-        $products = Product::where( function ($query) use ($search) {
-            $query->where( 'itemName', 'like', '%' . $search . '%' )
-                ->orWhere( 'category', 'like', '%' . $search . '%' )
-                ->orWhere( 'description', 'like', '%' . $search . '%' )
-                ->orWhere( 'company', 'like', '%' . $search . '%' );
-        } )->paginate( 10 )->setPath( 'search' );
-
-        $products->appends( ['search' => $search] );
-
-        return view( 'list', ['products' => $products, 'search' => $search] );
+        $search = $request->input('search');
+        $project = session()->get('project'); // Retrieve the project from the session
+    
+        $products = Product::where('project', $project) // Filter by project
+            ->where(function ($query) use ($search) {
+                $query
+                    ->where('itemName', 'like', '%' . $search . '%')
+                    ->orWhere('room', 'like', '%' . $search . '%')
+                    ->orWhere('category', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhere('company', 'like', '%' . $search . '%');
+            })
+            ->paginate(50)
+            ->setPath('search');
+    
+        $products->appends(['search' => $search]);
+    
+        return view('list', ['products' => $products, 'search' => $search]);
     }
 
 
@@ -105,5 +117,13 @@ class ItemController extends Controller
     function Test(Request $req)
     {
         return $req->input();
+    }
+
+    function SetProject(Request $req)
+    {
+        $project = $req->project;
+        session()->put( 'project', $project );
+        return redirect( 'list' );
+        
     }
 }

@@ -13,8 +13,10 @@
     ?>
 </head>
 <body>
-    <x-header data="Product list Page for _ project" />
     
+    <x-header data="Product list Page for _ project" />
+
+    <h1>currentProject is {{session('project')}}</h1>
     <x-search-bar />
 
     @if(isset($filter))
@@ -25,8 +27,8 @@
     @endif
     @if(isset($search))
     <h1>Searching: {{ $search }}</h1>
-    <form action="/filter" method="get">
-        <button type="submit">Clear Filter</button>
+    <form action="/search" method="get">
+        <button type="submit">Clear Search</button>
     </form>
     @endif
 
@@ -42,10 +44,27 @@
             <th class="column13">Delete</th>
         </tr>
 
-        @foreach($products as $item)
+        
+<?php
+$roomName = ''; // Initialize the roomName variable
+?>
+
+@foreach($products as $item)
+
+@if($roomName != $item->room)
+    <tr>
+        <td colspan="{{$numColumns}}" class="roomSplit">{{$item->room}} 2</td>
+    </tr>
+    
+    <?php
+    $roomName = $item->room; // Update the roomName variable
+    ?>
+@endif
+        
         <tr>
             <x-table-product fieldName="name" :item="$item" />
         </tr>
+
         @endforeach
     </table>
 
