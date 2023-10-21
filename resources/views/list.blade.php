@@ -15,8 +15,6 @@
 <body>
     
     <x-header data="Product list Page for _ project" />
-
-    <h1>currentProject is {{session('project')}}</h1>
     <x-search-bar />
 
     @if(isset($filter))
@@ -53,7 +51,7 @@ $roomName = ''; // Initialize the roomName variable
 
 @if($roomName != $item->room)
     <tr>
-        <td colspan="{{$numColumns}}" class="roomSplit">{{$item->room}} 2</td>
+        <td colspan="{{$numColumns}}" class="roomSplit">{{$item->room}}</td>
     </tr>
     
     <?php
