@@ -20,5 +20,5 @@
     <td class="column10"><x-status-button fieldName="status" :item="$item" /></td>
     <td class="column11">{{$item->proforma}}</td>
     <td class="column12"><x-filter-button fieldName="owner" :item="$item" /></td>
-    <td class="column13"><button onClick="ShowDeleteBox({{$item->id}}, '{{$item->itemName}}');">Delete</button></td>
+    <td class="column13"><button onClick="ShowEditBox('{{$item}}');" class="editButton">Edit</button></td>
 </tr>

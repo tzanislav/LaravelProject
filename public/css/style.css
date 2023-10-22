@@ -73,57 +73,7 @@ button:active {
     background-color: rgb(224, 224, 224);
 }
 
-.add{
-    display: none;
-    position: absolute;
-    border-radius: 15px;
-    background-color: rgb(224, 224, 224);
-    top: 30%;
-    left: auto;
-    padding: 50px;
-}
 
-.add form{
-
-    width: 100%;
-}
-
-.addForm.itemInput.addInput {
-    position: relative;
-    right: 0px;
-}
-.addForm.itemInput input
-{
-    position: relative;
-    right: 0px;
-}
-
-
-
-
-.status{
-    border: 2px solid black;
-}
-.status button
-{
-    background: none;
-}
-#status_0{
-    background-color: rgb(54, 54, 54);
-    color: white;
-}
-#status_1{
-    background-color: rgb(0, 255, 0);
-    color: white;
-}
-#status_2{
-    background-color: rgb(255, 255, 0);
-    color: black;
-}
-#status_3{
-    background-color: rgb(255, 0, 0);
-    color: white;
-}
 
 .importantItem{
     font-size: 16px;

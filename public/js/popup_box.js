@@ -1,16 +1,61 @@
-function ShowDeleteBox(id, name) {
-    var box = document.getElementsByClassName('delete')[0];
+// document.addEventListener("click", function (event) {
+//     console.log(event.target.classList)
+//     if (event.target.classList.contains("editButton")) {
+//         return;
+//     }
+//     if (!event.target.classList.contains("editBox")) {
+//         HideBox();
+//     }
+// });
+
+
+function ShowEditBox(item) {
+    HideAddBox ();
+    var box = document.getElementsByClassName('editBox')[0];
     box.style.display = 'block';
-    var nameElement = document.getElementById('delete_name');
-    nameElement.innerHTML = name;
-    var idElement = document.getElementById('item_Id');
-    idElement.innerHTML = id;
-    var deleteForm = document.getElementById('delete_form');
-    deleteForm.action = '/delete/' + id;
+    var encodedData = item;
+    // Decode HTML entities (e.g., &quot; to ")
+    var decodedData = encodedData.replace(/&quot;/g, '"');
+    // Parse the JSON string into a JavaScript object
+    var productData = JSON.parse(decodedData);
+    // Now, you have the data as a JavaScript object
+    
+
+    var keys = Object.keys(productData);
+
+    for (var i = 0; i < keys.length; i++) {
+        console.log(keys[i] + " = " + productData[keys[i]]);
+        var key = keys[i];
+        var value = productData[key];
+        var element = document.getElementById("editItem_" + key);
+        if (element) {
+            //element.innerHTML = value; 
+            element.value = value;
+        }
+    }
+
+    var updateForm = document.getElementById("update_form");
+    updateForm.action = "/update/" + productData.id;
+    var updateForm = document.getElementById("delete_form");
+    updateForm.action = "/delete/" + productData.id;
+
 }
 
-function HideDeleteBox () {
-    var box = document.getElementsByClassName('delete')[0]
+function HideBox () {
+    var box = document.getElementsByClassName('editBox')[0]
     box.style.display = 'none'
     console.log('hide')
 }
+
+function ShowAddBox() {
+    HideBox ();
+    var box = document.getElementsByClassName('addBox')[0];
+    box.style.display = 'block';
+}
+
+function HideAddBox () {
+    var box = document.getElementsByClassName('addBox')[0]
+    box.style.display = 'none'
+    console.log('hide')
+}
+

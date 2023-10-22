@@ -3,7 +3,7 @@
             font-size: 16x;
             background-color: black; 
             display: flex; align-items: center; 
-            width: 100%;
+            width: 100vw;
             
             top: 0;
             height: 128px;
@@ -21,7 +21,7 @@
 
 .navMenu
 {
-    
+
     display: flex;
     justify-content: space-between;
 

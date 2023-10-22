@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 
 class ItemController extends Controller
@@ -58,7 +58,41 @@ class ItemController extends Controller
             $data = Product::find( $id );
             $data->delete();
             echo "<script>console.log('ID: " . $id . "')</script>";
-            return redirect( 'list' );
+            return redirect()->back()->with('success', 'Record updated successfully');
+        } else {
+            return redirect( 'login' );
+        }
+    }
+    function Update($id, Request $req)
+    {
+        Log::info("This is an informational message to log.");
+        session()->flash('form', 'editItem');
+
+        foreach ($req->all() as $key => $value) {
+            if (strpos($value, '"') !== false) {
+                return redirect()->back()->withErrors('Please do not use double quotes in the form');
+            }
+        }
+
+
+
+
+        if (session()->has( 'user' )) {
+            $data = Product::find( $id );
+
+            $data->itemName = $req->itemName;
+            $data->room = $req->room;
+            $data->count = $req->count;
+            $data->category = $req->category;
+            $data->measure = $req->measure;
+            $data->company = $req->company;
+            $data->provider = $req->provider;
+            $data->description = $req->description;
+            $data->status = $req->status;
+            $data->proforma = $req->proforma;
+            $data->save();
+            return redirect()->back()->with('success', 'Record updated successfully');
+            
         } else {
             return redirect( 'login' );
         }
@@ -66,28 +100,38 @@ class ItemController extends Controller
 
     function AddItem(Request $req)
     {
-        $req->validate( [
-            'name' => 'required',
-            'count' => 'required',
-            'category' => 'required',
-            // Add validation rules for other fields as needed
-        ] );
+        session()->flash('form', 'addItem');
+        $req->validate([
+            'itemName' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'room' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'count' => 'required|numeric',
+            'category' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'measure' => 'regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'company' => 'regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'provider' => 'regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'status' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+        ]);
 
-        $item = new Product;
-        $item->name = $req->name;
-        $item->room = $req->room;
-        $item->count = $req->count;
-        $item->category = $req->category;
-        $item->measure = $req->measure;
-        $item->company = $req->company;
-        $item->description = $req->description;
-        $item->status = $req->status;
-        $item->proforma = $req->proforma;
-        $item->created_at = now();
-        $item->updated_at = now();
-        $item->save();
 
-        return redirect( 'list' );
+        if (session()->has( 'user' )) {
+            $data = new Product;
+            $data->project = session()->get( 'project' );
+            $data->itemName = $req->itemName;
+            $data->room = $req->room;
+            $data->count = $req->count;
+            $data->category = $req->category;
+            $data->measure = $req->measure;
+            $data->company = $req->company;
+            $data->provider = $req->provider;
+            $data->description = $req->description;
+            $data->status = $req->status;
+            $data->proforma = $req->proforma;
+            $data->save();
+            return redirect()->back()->with('success', $data->itemName . ' added successfully to ' . $data->room );
+            
+        } else {
+            return redirect( 'login' );
+        }
     }
 
     public function search(Request $request)

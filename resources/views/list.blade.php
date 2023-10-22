@@ -15,8 +15,16 @@
 <body>
     
     <x-header data="Product list Page for _ project" />
-    <x-search-bar />
+    <br>
+    <button class="addButton" onclick="ShowAddBox()">Add Item</button>
+    <br>
 
+    <x-search-bar />
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     @if(isset($filter))
     <h1>Filter: {{ $filter }}</h1>
     <form action="/filter" method="get">
@@ -71,22 +79,9 @@ $roomName = ''; // Initialize the roomName variable
         {{$products->links()}}
     </ul>
 
-    <x-box-delete />
+    <x-pop-up-box-edit/>
+    <x-pop-up-box-add/>
 
-    <div class="delete">
-        <div class="itemName">
-            <p>Are You Sure You Want To Delete This Item?</p>
-            <label for="Id" id="item_Id">Name</label>
-            <br>
-            <label for="name" id="delete_name">Name</label>
 
-            <br><br><br><br>
-        </div>
-        <form id="delete_form" method="POST">
-            @csrf
-            <button type="submit">Delete</button>
-        </form>
-        <button onClick="HideDeleteBox()">Cancel</button>
-    </div>
 </body>
 </html>
