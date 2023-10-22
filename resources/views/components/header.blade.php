@@ -8,6 +8,7 @@
         <div class="navMenu">
             <a href="/" style="color: white; margin-right: 16px;">Home</a>
             <a href="/about" style="color: white; margin-right: 16px;">Renders</a>
+            <a href="/logs" style="color: white; margin-right: 16px;">Logs</a>
             <a href="/" style="color: white; margin-right: 16px;">Projects</a>
         </div>
 

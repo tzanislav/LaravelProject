@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Log;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 
 class ItemController extends Controller
@@ -56,8 +56,15 @@ class ItemController extends Controller
     {
         if (session()->has( 'user' )) {
             $data = Product::find( $id );
+            
+            $log = new Log;
+            $log->type = "delete";
+            $log->content = "Item: " . $data->itemName . " deleted";
+            $log->owner = session()->get( 'user' );
+            $log->save();
+
             $data->delete();
-            echo "<script>console.log('ID: " . $id . "')</script>";
+
             return redirect()->back()->with('success', 'Record updated successfully');
         } else {
             return redirect( 'login' );
@@ -65,7 +72,6 @@ class ItemController extends Controller
     }
     function Update($id, Request $req)
     {
-        Log::info("This is an informational message to log.");
         session()->flash('form', 'editItem');
 
         foreach ($req->all() as $key => $value) {
@@ -74,11 +80,28 @@ class ItemController extends Controller
             }
         }
 
-
-
-
         if (session()->has( 'user' )) {
             $data = Product::find( $id );
+
+            //Compare the old and new values
+            $oldValues = $data->toArray();
+            $newValues = $req->all();
+            $changes = array();
+
+            foreach ($oldValues as $key => $value) {
+                if (array_key_exists($key, $newValues) && $oldValues[$key] != $newValues[$key]) {
+                    $changes[$key] = $newValues[$key];
+                }
+            }
+
+            //Log the changes
+            $log = new Log;
+            $log->type = "update";
+            $log->content = json_encode($changes);
+            $log->owner = session()->get( 'user' );
+            $log->save();
+
+            
 
             $data->itemName = $req->itemName;
             $data->room = $req->room;
@@ -127,6 +150,14 @@ class ItemController extends Controller
             $data->status = $req->status;
             $data->proforma = $req->proforma;
             $data->save();
+
+            $log = new Log;
+            $log->type = "add";
+            $log->content = "Item: " . $data->itemName . " added to " . $data->room;
+            $log->owner = session()->get( 'user' );
+            $log->save();
+
+
             return redirect()->back()->with('success', $data->itemName . ' added successfully to ' . $data->room );
             
         } else {
