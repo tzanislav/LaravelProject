@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logs</title>
+    <title>Logs View</title>
 </head>
 <body>
     <x-header data="Logs" />
@@ -27,6 +27,11 @@
         </tr>
         @endforeach
     </table>
+
+
+
+
+
 
 
 
