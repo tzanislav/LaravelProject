@@ -2,24 +2,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-
-
-    <style>
-        .card {
-            margin: 0 auto;
-            width: 50%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-        }
-    </style>
-
     <x-Header data="About"/>
-    <div class="container">
+    <div class="container inputBox">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">

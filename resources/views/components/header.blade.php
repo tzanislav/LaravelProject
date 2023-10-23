@@ -13,20 +13,17 @@
         </div>
 
         <div class="navTitle">
-            @if(session('project'))
-            <p style="color: white; display: flex; margin-left: auto; right: 0px;" class="navTitle"> {{session('project')}} </p>
-            @else
-            <p style="color: white; display: flex; margin-left: auto; right: 0px;" class="navTitle"> Welcome </p>
-            @endif
+
         </div>
 
         <div class ="username">
             
                 <!-- Check if the user is authenticated -->
                 @if (Auth::check())
+                
                     <p>
                         <!-- Show the name of the logged-in user -->
-                        Welcome, {{ Auth::user()->name }}
+                         Welcome, <a href="{{ route('dashboard') }}">  {{ Auth::user()->name }} </a>
                     </p>
                     <p>
                         <!-- Add a logout link -->

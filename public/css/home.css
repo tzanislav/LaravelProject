@@ -6,3 +6,24 @@
     align-items: center;
 
 }
+
+.projectList
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.projectList a
+{
+    text-decoration: underline;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.projectList a:hover
+{
+    color: blue;
+}

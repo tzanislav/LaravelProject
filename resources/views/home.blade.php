@@ -9,21 +9,20 @@
     
     <x-Header data="Home"/>
     <div class="inputBox">
+    <img src = "https://laravel-tzani.s3.eu-west-1.amazonaws.com/img/Logo+Black.png" class="adimariLogoLarge">
         <div class="titles">
             <div class="homeTitle">
                 <h1>Welcome</h1>
             </div>
-            <div class="homeContent">
-                <p>Select project</p>
-            </div>
+
         </div>
-        <div class="projects">
-            <div class="container">
-                
+        <div class="projectList">  
+        <div >
+                <h2>Select project</h2>
+        </div>          
                 @foreach($uniqueItems as $item)
                 <a href="/list/{{$item->project}}">{{$item->project}}</a></li>      
-                @endforeach             
-            </div>           
+                @endforeach                      
         </div>
     </div>
 
