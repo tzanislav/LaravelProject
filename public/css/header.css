@@ -10,6 +10,7 @@
             margin: 0px 0px 24px 0px;
 }
 
+
 .navButtons
 {
     width: 100%;
@@ -31,3 +32,26 @@
 {
     font-size: 32px;
 }
+
+.username
+{
+    color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.username a
+{
+    color: white;
+    text-decoration: none;
+}
+.username a:hover
+{
+    color: #ff0000;
+    text-decoration: none;
+}
+

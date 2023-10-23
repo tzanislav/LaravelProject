@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class pop-up-box extends Component
+class status_button extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class pop-up-box extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.pop-up-box');
+        return view('components.status-button');
     }
 }

@@ -13,7 +13,7 @@
     <tr>
         <td>{{ $log->id }}</td>
         <td>{{ $log->type }}</td>
-        <td>{{!! $log->content !!}}</td>
+        <td>{{ $log->content }}</td>
         <td>{{ $log->owner }}</td>
         <td>{{ $log->created_at }}</td>
     </tr>

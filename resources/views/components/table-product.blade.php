@@ -3,10 +3,31 @@
 
 
 @if($item->id%2 == 0)
-    <tr class="even">
+    <tr class="even table_Product" >
 @else
-    <tr class="odd">
+    <tr class="odd table_Product">
 @endif
+    <style>
+        .column11
+        {
+            display: none;
+        }
+        .column12
+        {
+            display: none;
+        }
+        .column15
+        {
+            display: none;
+        }
+        .column16
+        {
+            display: none;
+        }
+
+    </style>
+
+
     <td class="column0">{{$item->id}}</td>
     <td class="column1">{{$item->project}}</td>
     <td class="column2"><x-filter-button fieldName="room" :item="$item" /></td>
@@ -18,7 +39,11 @@
     <td class="column8"><x-filter-button fieldName="provider" :item="$item" /></td>
     <td class="column9">{{$item->description}}</td>
     <td class="column10"><x-status-button fieldName="status" :item="$item" /></td>
-    <td class="column11">{{$item->proforma}}</td>
-    <td class="column12"><x-filter-button fieldName="owner" :item="$item" /></td>
-    <td class="column13"><button onClick="ShowEditBox('{{$item}}');" class="editButton">Edit</button></td>
+    <td class="column11">{{$item->price1}}</td>
+    <td class="column12 ">{{$item->price2}}</td>
+    <td class="column13">{{$item->proforma}}</td>
+    <td class="column14"><x-filter-button fieldName="owner" :item="$item" /></td>
+    <td class="column15">{{$item->created_at}}</td>
+    <td class="column16">{{$item->updated_at}}</td>
+    <td class="column17"><button onClick="ShowEditBox('{{$item}}');" class="editButton">Edit</button></td>
 </tr>

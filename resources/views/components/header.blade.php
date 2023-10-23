@@ -21,12 +21,28 @@
         </div>
 
         <div class ="username">
-            @if(session('user'))
-            <p style="color: white; display: flex; margin-left: auto; right: 0px;"> Hello,  {{session('user')}} </p>
-            <a href="/logout" style="color: white; display: flex; margin-left: auto; right: 0px;"> Logout </a>
-            @else
-            <a href="/login" style="color: white; display: flex; margin-left: auto; right: 0px;"> Login </a>
-            @endif
+            
+                <!-- Check if the user is authenticated -->
+                @if (Auth::check())
+                    <p>
+                        <!-- Show the name of the logged-in user -->
+                        Welcome, {{ Auth::user()->name }}
+                    </p>
+                    <p>
+                        <!-- Add a logout link -->
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </p>
+                @else
+                    <p>
+                        <!-- Show a login link if the user is not authenticated -->
+                        <a href="{{ route('login') }}">Login</a>
+                    </p>
+                @endif
         </div>
 
     </div>

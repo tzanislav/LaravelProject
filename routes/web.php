@@ -1,13 +1,10 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\UploadController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProjectsController;
-use App\Http\Controllers\LogController;
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +16,7 @@ use App\Http\Controllers\LogController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', [ProjectsController::class, 'listUniqueItems']);
 Route::get('/home', [ProjectsController::class, 'listUniqueItems']);
 
@@ -29,48 +27,34 @@ Route::get('/contacts', function () {
     return view('contacts');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
-Route::get('/restricted', function () {
-    return view('restricted.denied');
-});
-
-Route::get('/allowed', function () {
-    return view('restricted.allowed');
-});
-
-Route::get('/login', [UsersController::class, 'Index']);
-
-Route::post('login', [UsersController::class, 'Login']);
-Route::get('/logout', function () {
-    if(session()->has('user'))
-    {
-        session()->pull('user');
-    }
-    return redirect('login');
-});
-
-Route::view('/AddMember', 'AddMember');
-Route::post('/AddMember', [UsersController::class, 'AddMember']);
-
-Route::view('/upload', 'upload'); 
-Route::post('/upload', [UploadController::class, 'upload']);
-
-Route::get('/list', [ItemController::class, 'show']);
 Route::post('/delete/{id}', [ItemController::class, 'destroy']);
 Route::post('/update/{id}', [ItemController::class, 'update']);
 Route::post('/addItem', [ItemController::class, 'addItem']);
 
-
-Route::post('/AddItem', [ItemController::class, 'AddItem']);
-Route::get('/filter', [ItemController::class, 'filter']);
-Route::get('/search',  [ItemController::class, 'search']);
-
-Route::get('/list/{project}', [ItemController::class, 'setProject']);
-
-Route::get("logs", [LogController::class, "index"]);
+Route::middleware('auth')->group(function () {
+    //Breeze Routes
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
+    //My routes
+    Route::get('/list', [ItemController::class, 'show']);
 
 
+
+    Route::post('/AddItem', [ItemController::class, 'AddItem']);
+    Route::get('/filter', [ItemController::class, 'filter']);
+    Route::get('/search',  [ItemController::class, 'search']);
+
+    Route::get('/list/{project}', [ItemController::class, 'setProject']);
+
+    Route::get("logs", [LogController::class, "index"]);
+
+});
+
+require __DIR__.'/auth.php';

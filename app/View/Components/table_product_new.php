@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class table-product-new extends Component
+class table_product_new extends Component
 {
     /**
      * Create a new component instance.

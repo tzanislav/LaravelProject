@@ -30,6 +30,9 @@ function ShowEditBox(item) {
         var element = document.getElementById("editItem_" + key);
         if (element) {
             //element.innerHTML = value; 
+            if(value == null) {
+                value = "_";
+            }
             element.value = value;
         }
     }

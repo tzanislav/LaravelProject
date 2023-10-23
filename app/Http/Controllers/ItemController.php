@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class ItemController extends Controller
@@ -14,16 +15,18 @@ class ItemController extends Controller
     //
     function show()
     {
-        $currentProject = session()->get( 'project' );
-
-        if (session()->has( 'user' )) {
-            $data = Product::where( 'project', $currentProject )->paginate(50);
-
-            return view( 'list', ['products' => $data], ['currentProject' => $currentProject] );
+        if (Auth::check()) {
+            $currentProject = session()->get('project');
+            $data = Product::where('project', $currentProject)->paginate(50);
+            return view('list', [
+                'products' => $data,
+                'currentProject' => $currentProject
+            ]);
         } else {
-            return redirect( 'login' );
+            return redirect('login');
         }
     }
+    
 
 
     public function filter(Request $request)
@@ -54,13 +57,13 @@ class ItemController extends Controller
 
     function destroy($id)
     {
-        if (session()->has( 'user' )) {
+        if (Auth::check()) {
             $data = Product::find( $id );
             
             $log = new Log;
             $log->type = "delete";
             $log->content = "Item: " . $data->itemName . " deleted";
-            $log->owner = session()->get( 'user' );
+            $log->owner = Auth::user()->name;
             $log->save();
 
             $data->delete();
@@ -80,7 +83,7 @@ class ItemController extends Controller
             }
         }
 
-        if (session()->has( 'user' )) {
+        if (Auth::check()) {
             $data = Product::find( $id );
 
             //Compare the old and new values
@@ -95,7 +98,7 @@ class ItemController extends Controller
                     $log = new Log;
                     $log->type = "update";
                     $log->content = "Item: <b>" . $data->itemName . "</b> " . $key . " changed from " . $oldValues[$key] . " to <b>" . $newValues[$key] . "</b>";
-                    $log->owner = session()->get( 'user' );
+                    $log->owner = Auth::user()->name;
                     $log->save();
                 }
             }
@@ -137,7 +140,7 @@ class ItemController extends Controller
         ]);
 
 
-        if (session()->has( 'user' )) {
+        if (Auth::check()) {
             $data = new Product;
             $data->project = session()->get( 'project' );
             $data->itemName = $req->itemName;
@@ -155,7 +158,7 @@ class ItemController extends Controller
             $log = new Log;
             $log->type = "add";
             $log->content = "Item: " . $data->itemName . " added to " . $data->room;
-            $log->owner = session()->get( 'user' );
+            $log->owner = Auth::user()->name;
             $log->save();
 
 
@@ -187,6 +190,7 @@ class ItemController extends Controller
     
         return view('list', ['products' => $products, 'search' => $search]);
     }
+
 
 
 

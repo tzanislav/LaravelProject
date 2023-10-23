@@ -47,7 +47,7 @@
                 echo "<th class=column{$i}>" . $column->Field . "</th>";
             }
             ?>
-            <th class="column13">Delete</th>
+            <th class="column17">Delete</th>
         </tr>
 
         
