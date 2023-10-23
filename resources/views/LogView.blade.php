@@ -21,7 +21,15 @@
         <tr>
             <td>{{ $log->id }}</td>
             <td>{{ $log->type }}</td>
-            <td>{{ $log->content }}</td>
+            <td>
+                @if(is_array($log->content))
+                    @foreach($log->content as $key => $value)
+                        {{ $key }} : {{ $value }} 
+                    @endforeach
+                @else
+                {{ $log->content }}
+                @endif
+            </td>
             <td>{{ $log->owner }}</td>
             <td>{{ $log->created_at }}</td>
         </tr>
