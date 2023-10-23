@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id(); // Auto-incremental primary key
+            $table->string('type');
             $table->string('content');
             $table->text('owner');
             $table->timestamps(); // Created_at and updated_at timestamps
