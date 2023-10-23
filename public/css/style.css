@@ -102,3 +102,68 @@ button:active {
 {
     width: 50px;
 }
+
+
+.inputBox
+{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    background-color: rgb(255, 255, 255);
+    padding: 40px;
+
+
+    border: none;
+    color: black;
+
+
+
+    
+}
+
+.inputBox input
+{
+    border-radius: 4px;
+    border: none;
+    padding: 0px 10px 0px 10px;
+    word-wrap: break-word;
+    border: none;
+    cursor: pointer;
+    height: 24px;
+    color: black;
+}
+
+.inputBox h1
+{
+    text-align: center;
+
+}
+
+
+
+.inputBox .inputSettings
+{
+    display: block;
+}
+
+.inputSettings .remember
+{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.inputLoginButton
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
