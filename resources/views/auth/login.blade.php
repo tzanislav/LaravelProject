@@ -6,11 +6,11 @@
 </head>
 <body>
 
-
+    <x-header data="Login" />
     
     <form method="POST" action="{{ route('login') }}">
         <div class="inputBox">
-            <img src = "https://laravel-tzani.s3.eu-west-1.amazonaws.com/img/Logo+Black.png">
+            <img src = "https://laravel-tzani.s3.eu-west-1.amazonaws.com/img/Logo+Black.png" class="adimariLogoMid">
             <h1>Login</h1>
             <div class="inputEmail">
                 <div class="texts">
@@ -18,7 +18,7 @@
                     
                     <label for="email">Email</label>
                     <br>
-                    <input id="email" class="block mt-1 w-full" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
+                    <input id="email"  type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
                     <br>
                     @if ($errors->has('email'))
                         <p class="text-red-500 mt-2">{{ $errors->first('email') }}</p>
@@ -27,9 +27,9 @@
                     <br>
                     <label for="password">Password</label>
                     <br>
-                    <input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password">
+                    <input id="password" type="password" name="password" required autocomplete="current-password">
                     @if ($errors->has('password'))
-                        <p class="text-red-500 mt-2">{{ $errors->first('password') }}</p>
+                        <p class="errorText">{{ $errors->first('password') }}</p>
                     @endif
                     <br>
                 </div>
@@ -55,8 +55,9 @@
             </div>
             <br>
             <br>
-            <div>
-            <a href="{{ route('register') }}" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Register</a>
+            <div class="register">
+                <p>Don't have an account?</p>
+                <a href="{{ route('register') }}" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Register</a>
             </div>
         </div>
     </form>
