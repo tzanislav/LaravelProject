@@ -1,27 +1,36 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Password</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
 
+    <x-header data="Confirm Password" />
+    
     <form method="POST" action="{{ route('password.confirm') }}">
-        @csrf
+        <div class="inputBox">
+            <img src="https://laravel-tzani.s3.eu-west-1.amazonaws.com/img/Logo+Black.png" class="adimariLogoMid">
+            <h1>Confirm Password</h1>
+            <div class="inputEmail">
+                <div class="texts">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    
+                    <label for="password">Password</label>
+                    <br>
+                    <input id="password" type="password" name="password" required autocomplete="current-password">
+                    @if ($errors->has('password'))
+                        <p class="errorText">{{ $errors->first('password') }}</p>
+                    @endif
+                </div>
+            </div>
 
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
+            <br>
+            <div class="inputLoginButton">
+                <button type="submit" class="ml-3">Confirm</button>
+            </div>
         </div>
     </form>
-</x-guest-layout>
+
+</body>
+</html>

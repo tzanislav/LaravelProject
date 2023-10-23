@@ -113,18 +113,17 @@ button:active {
 
 .inputBox
 {
-    position: absolute;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 15px;
     background-color: rgb(255, 255, 255);
     padding: 40px 80px;
+    width: 300px;
+    margin: 64px auto;
 
 
     border: none;

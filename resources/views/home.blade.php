@@ -8,7 +8,7 @@
 <body>
     
     <x-Header data="Home"/>
-    <div class="homePage">
+    <div class="inputBox">
         <div class="titles">
             <div class="homeTitle">
                 <h1>Welcome</h1>
@@ -16,20 +16,15 @@
             <div class="homeContent">
                 <p>Select project</p>
             </div>
-
         </div>
         <div class="projects">
-
-
             <div class="container">
-                <ul>
-                    @foreach($uniqueItems as $item)
-                    <li><a href="/list/{{$item->project}}">{{$item->project}}</a></li>      
-                    @endforeach
-                </ul>
-            </div>
-            
-</div>
+                
+                @foreach($uniqueItems as $item)
+                <a href="/list/{{$item->project}}">{{$item->project}}</a></li>      
+                @endforeach             
+            </div>           
+        </div>
     </div>
 
 </body>
