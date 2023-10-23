@@ -91,15 +91,16 @@ class ItemController extends Controller
             foreach ($oldValues as $key => $value) {
                 if (array_key_exists($key, $newValues) && $oldValues[$key] != $newValues[$key]) {
                     $changes[$key] = $newValues[$key];
+                                //Log the changes
+                    $log = new Log;
+                    $log->type = "update";
+                    $log->content = "Item: <b>" . $data->itemName . "</b> " . $key . " changed from " . $oldValues[$key] . " to <b>" . $newValues[$key] . "</b>";
+                    $log->owner = session()->get( 'user' );
+                    $log->save();
                 }
             }
 
-            //Log the changes
-            $log = new Log;
-            $log->type = "update";
-            $log->content = json_encode($changes);
-            $log->owner = session()->get( 'user' );
-            $log->save();
+
 
             
 
