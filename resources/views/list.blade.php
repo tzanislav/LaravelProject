@@ -83,8 +83,7 @@ $roomName = ''; // Initialize the roomName variable
 </div>
 @if($roomName != $item->room)
     <tr>
-        <td colspan="{{$numColumns}}" class="roomSplit"><x-filter-button fieldName="room" :item="$item" /></td>
-        
+        <td colspan="{{$numColumns}}" class="roomSplit"><x-filter-button fieldName="room" :item="$item" /></td>       
     </tr>
     
     <?php
@@ -99,8 +98,8 @@ $roomName = ''; // Initialize the roomName variable
 @endforeach
 @if($shownItems == 0)
     <?php
-    header("Location: /list");
-    exit;
+    //header("Location: /list");
+    //exit;
     ?>
 @endif
     </table>
