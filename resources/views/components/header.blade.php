@@ -6,10 +6,15 @@
     
     <div style="display: flex; margin-left: 32px;" class='navButtons'>
         <div class="navMenu">
-            <a href="/" style="color: white; margin-right: 16px;">Home</a>
-            <a href="/about" style="color: white; margin-right: 16px;">Renders</a>
-            <a href="/logs" style="color: white; margin-right: 16px;">Logs</a>
-            <a href="/" style="color: white; margin-right: 16px;">Projects</a>
+            <a href="/">Home</a>
+            <a href="/about" >Renders</a>
+            <a href="/">Projects</a>
+            @if (Auth::check())
+            @if(Auth::user()->clearance > 0)           
+            <a href="/admin">Admin</a>
+            <a href="/logs" >Logs</a>
+            @endif
+            @endif
         </div>
 
         <div class="navTitle">
@@ -34,6 +39,8 @@
                             @csrf
                         </form>
                     </p>
+
+
                 @else
                     <p>
                         <!-- Show a login link if the user is not authenticated -->

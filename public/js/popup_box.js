@@ -31,7 +31,7 @@ function ShowEditBox(item) {
         if (element) {
             //element.innerHTML = value; 
             if(value == null) {
-                value = "_";
+                value = "";
             }
             element.value = value;
         }

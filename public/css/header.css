@@ -26,7 +26,21 @@
     display: flex;
     justify-content: space-between;
 
+
 }
+
+.navMenu a{
+    color: white;
+    margin-right: 16px; 
+    text-decoration: none;
+
+}
+.navMenu a:hover
+{
+    color: #ff0000;
+    text-decoration: underline;
+}
+
 
 .navTitle
 {

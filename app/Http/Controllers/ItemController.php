@@ -32,7 +32,7 @@ class ItemController extends Controller
             $shownItems = $shownItems->where( $filterField, $filterValue );
         }
         $shownItems = $shownItems->orderBy( 'room', 'desc' )->paginate( 500 );
-        return view( 'list', [
+        return view( 'list_fancy', [
             'products' => $shownItems,
             'currentProject' => $currentProject,
             'filterList' => $filterList
@@ -128,6 +128,18 @@ class ItemController extends Controller
             }
         }
 
+        $req->validate( [
+            'itemName' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'room' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'count' => 'required|numeric',
+            'category' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'measure' => 'regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'company' => 'regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'provider' => 'regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'status' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'image' => 'url',
+        ] );
+
 
         $data = Product::find( $id );
 
@@ -158,6 +170,7 @@ class ItemController extends Controller
         $data->description = $req->description;
         $data->status = $req->status;
         $data->proforma = $req->proforma;
+        $data->image = $req->image;
         $data->save();
         return redirect()->back()->with( 'success', 'Record updated successfully' );
 
@@ -176,6 +189,7 @@ class ItemController extends Controller
             'company' => 'regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
             'provider' => 'regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
             'status' => 'required|regex:/[\p{L}\p{N}.,?!]+/u|not_in:"|max:255',
+            'image' => 'url | image | max:2048',
         ] );
 
 
@@ -192,6 +206,7 @@ class ItemController extends Controller
         $data->description = $req->description;
         $data->status = $req->status;
         $data->proforma = $req->proforma;
+        $data->image = $req->image;
         $data->save();
 
         $log = new Log;

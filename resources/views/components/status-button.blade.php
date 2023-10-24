@@ -1,6 +1,7 @@
-@props(['fieldName', 'item'])
+@props(['fieldName', 'item' , "class"])
 
 <?php
+$class = $class ?? "tableButton";
 $colors = [
     "неизбрано" => "rgb(204, 204, 204)",
     "чакаме оферта" => "rgb(136, 135, 135)",
@@ -18,5 +19,5 @@ $backgroundColor = $colors[$item[$fieldName]] ?? 'rgb(255, 255, 255)';
 
 <form action="/AddFilter" method="get">
     <input type="hidden" name="filter" value='{{ $fieldName }}:{{ $item[$fieldName] }}'>
-    <button type="submit" class="tableButton" style="background-color: {{ $backgroundColor }}; color:black">{{ $item[$fieldName] }}</button>
+    <button type="submit" class="table_buttton_{{$class}}" style="background-color: {{ $backgroundColor }}; color:black">{{ $item[$fieldName] }}</button>
 </form>

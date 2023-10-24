@@ -14,6 +14,8 @@
     @csrf   
         <label for="itemName" id="editLabel_itemName"> Name </label>
         <input type="text" name="itemName" id="editItem_itemName" placeholder = "e.g. Висяща Лампа">
+        <label for="image" id="editLabel_image"> Image URL </label>
+        <input type="text" name="image" id="editLabel_image" placeholder = "e.g. somthing.png">
         <label for="room" id="editLabel_room"> Room </label>
         <input type="text" name="room" id="editItem_room" placeholder = "e.g. Дневна">
         <label for="category" id="editLabel_category"> Category </label>
@@ -29,7 +31,7 @@
         <label for="measure" id="editLabel_measure">Measure</label>
         <select name="measure" id="editItem_measure">
             <option value="м2">m2</option>
-            <option value="бр">бр.</option>
+            <option value="бр.">бр.</option>
             <option value="м">м</option>
         </select>
 

@@ -25,7 +25,8 @@ return new class extends Migration
             $table->string('status')->default('неизбрано'); // Set a default value for 'status'
             $table->string('price1') ->nullable();
             $table->string('price2') ->nullable();
-            $table->string('proforma') ->nullable();
+            $table->string('proforma') ->nullable();      
+            $table->string('image')->default("https://laravel-tzani.s3.eu-west-1.amazonaws.com/img/block.png")  ->nullable(); //image URL
             $table->string('owner');
             $table->timestamps();
         });
