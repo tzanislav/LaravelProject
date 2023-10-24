@@ -19,24 +19,43 @@
     <button class="addButton" onclick="ShowAddBox()">Add Item</button>
     <br>
 
-    <x-search-bar />
+     <x-search-bar />
     @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
     @endif
-    @if(isset($filter))
-    <h1>Filter: {{ $filter }}</h1>
-    <form action="/filter" method="get">
-        <button type="submit">Clear Filter</button>
+
+    @if (isset($filterList) && $filterList != null)
+    <div class="filterList">
+        <h3>Filters:</h3>
+        @foreach($filterList as $filter)
+        <form action="/RemoveFilter" method="get">
+            <input type="hidden" name="filter" value='{{ $filter }}'>
+            <button type="submit" class="tableButton">{{ $filter }}</button>
+        </form>
+        @endforeach
+
+        <form action="/ClearFilter" method="get">
+        <button type="submit">Clear</button>
     </form>
+    </div>
     @endif
+
+
+    
     @if(isset($search))
     <h1>Searching: {{ $search }}</h1>
-    <form action="/search" method="get">
-        <button type="submit">Clear Search</button>
-    </form>
+    <a href="/list" class=" mt-2 ml-2">
+                <button type="button" class="btn btn-default">
+                    Clear search
+                </button>
+    </a>  
     @endif
+
+
+
+
 
     <table>
         <tr>
@@ -55,11 +74,17 @@
 $roomName = ''; // Initialize the roomName variable
 ?>
 
+<div style="display:none"> 
+{{$shownItems = 0}}
+</div>
 @foreach($products as $item)
-
+<div style="display:none"> 
+{{$shownItems += 1}}
+</div>
 @if($roomName != $item->room)
     <tr>
-        <td colspan="{{$numColumns}}" class="roomSplit">{{$item->room}}</td>
+        <td colspan="{{$numColumns}}" class="roomSplit"><x-filter-button fieldName="room" :item="$item" /></td>
+        
     </tr>
     
     <?php
@@ -71,7 +96,13 @@ $roomName = ''; // Initialize the roomName variable
             <x-table-product fieldName="name" :item="$item" />
         </tr>
 
-        @endforeach
+@endforeach
+@if($shownItems == 0)
+    <?php
+    header("Location: /list");
+    exit;
+    ?>
+@endif
     </table>
 
 

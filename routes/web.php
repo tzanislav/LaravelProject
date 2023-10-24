@@ -48,9 +48,13 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/AddItem', [ItemController::class, 'AddItem']);
-    Route::get('/filter', [ItemController::class, 'filter']);
-    Route::get('/search',  [ItemController::class, 'search']);
+    Route::get('/AddFilter', [ItemController::class, 'AddFilter']);
+    Route::get('/RemoveFilter', [ItemController::class, 'RemoveFilter']);
+    Route::get('/ClearFilter', [ItemController::class, 'ClearFilters']);
 
+    Route::get('/search',  [ItemController::class, 'Search']);
+    Route::get('/ClearSearch', [ItemController::class, 'ClearSearch']);
+    
     Route::get('/list/{project}', [ItemController::class, 'setProject']);
 
     Route::get("logs", [LogController::class, "index"]);

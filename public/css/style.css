@@ -57,10 +57,25 @@ td {
 }
 .roomSplit
 {
-    background-color: rgb(54, 54, 54);
+    background-color: rgb(187, 192, 207);
     color: white;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
+}
+.roomSplit button
+{
+    background-color: rgb(187, 192, 207);
+    border-radius: 4px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    height: 24px;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    width: 400px;
 }
 .w-5{
     position: relative;
@@ -105,10 +120,21 @@ button:active {
 {
     display: none;
 }
+
 .column1
 {
     display: none;
 }
+.column2
+{
+    display: none;
+}
+.column3
+{
+    font-size: 12px;
+    font-weight: bold;
+}
+
 .column9
 {
     width: 200px;
@@ -116,6 +142,10 @@ button:active {
 .column13
 {
     width: 50px;
+}
+.column14
+{
+    display: none;
 }
 
 

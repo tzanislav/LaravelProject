@@ -16,7 +16,7 @@ $colors = [
 $backgroundColor = $colors[$item[$fieldName]] ?? 'rgb(255, 255, 255)';
 ?>
 
-<form action="/filter" method="get">
+<form action="/AddFilter" method="get">
     <input type="hidden" name="filter" value='{{ $fieldName }}:{{ $item[$fieldName] }}'>
     <button type="submit" class="tableButton" style="background-color: {{ $backgroundColor }}; color:black">{{ $item[$fieldName] }}</button>
 </form>
