@@ -16,33 +16,31 @@ class ItemController extends Controller
     //
     function show()
     {
-        if (Auth::check()) {
-            global $shownItems;
 
-            $filterList = session()->get( 'filterList' );
-            if ($filterList == null) {
-                $filterList = array();
-            }
-            $currentProject = session()->get( 'project' );
-            $shownItems = Product::where( 'project', $currentProject );
-            foreach ($filterList as $filter) {
-                $filterParts = explode( ':', $filter );
-                $filterField = $filterParts[0];
-                $filterValue = $filterParts[1];
-                $shownItems = $shownItems->where( $filterField, $filterValue );
-            }
+        global $shownItems;
 
-
-
-            $shownItems = $shownItems->orderBy('room', 'desc')->paginate( 20 );
-            return view( 'list', [
-                'products' => $shownItems,
-                'currentProject' => $currentProject,         
-                'filterList' => $filterList
-            ] );
-        } else {
-            return redirect( 'login' );
+        $filterList = session()->get( 'filterList' );
+        if ($filterList == null) {
+            $filterList = array();
         }
+        $currentProject = session()->get( 'project' );
+        $shownItems = Product::where( 'project', $currentProject );
+        foreach ($filterList as $filter) {
+            $filterParts = explode( ':', $filter );
+            $filterField = $filterParts[0];
+            $filterValue = $filterParts[1];
+            $shownItems = $shownItems->where( $filterField, $filterValue );
+        }
+
+
+
+        $shownItems = $shownItems->orderBy( 'room', 'desc' )->paginate( 100 );
+        return view( 'list', [
+            'products' => $shownItems,
+            'currentProject' => $currentProject,
+            'filterList' => $filterList
+        ] );
+
     }
 
     public function AddFilter(Request $req)
@@ -54,7 +52,7 @@ class ItemController extends Controller
         }
         array_push( $filterList, $filter );
         session()->put( 'filterList', $filterList );
-        
+
         return redirect()->back();
     }
 
@@ -75,7 +73,7 @@ class ItemController extends Controller
         session()->forget( 'filterList' );
         session()->forget( 'search' );
         return redirect()->back();
-        
+
     }
 
     public function Search(Request $request)
@@ -93,13 +91,13 @@ class ItemController extends Controller
 
         } );
 
-        $shownItems = $shownItems->orderBy('room', 'desc')->paginate( 50 );
+        $shownItems = $shownItems->orderBy( 'room', 'desc' )->paginate( 50 );
 
         return view( 'list', [
             'products' => $shownItems,
             'currentProject' => session()->get( 'project' ),
-            
-            'search' => $search       
+
+            'search' => $search
         ] );
     }
 
@@ -109,21 +107,19 @@ class ItemController extends Controller
 
     function destroy($id)
     {
-        if (Auth::check()) {
-            $data = Product::find( $id );
 
-            $log = new Log;
-            $log->type = "delete";
-            $log->content = "Item: " . $data->itemName . " deleted";
-            $log->owner = Auth::user()->name;
-            $log->save();
+        $data = Product::find( $id );
 
-            $data->delete();
+        $log = new Log;
+        $log->type = "delete";
+        $log->content = "Item: " . $data->itemName . " deleted";
+        $log->owner = Auth::user()->name;
+        $log->save();
 
-            return redirect()->back()->with( 'success', 'Record updated successfully' );
-        } else {
-            return redirect( 'login' );
-        }
+        $data->delete();
+
+        return redirect()->back()->with( 'success', 'Record updated successfully' );
+
     }
     function Update($id, Request $req)
     {
@@ -135,42 +131,40 @@ class ItemController extends Controller
             }
         }
 
-        if (Auth::check()) {
-            $data = Product::find( $id );
 
-            //Compare the old and new values
-            $oldValues = $data->toArray();
-            $newValues = $req->all();
-            $changes = array();
+        $data = Product::find( $id );
 
-            foreach ($oldValues as $key => $value) {
-                if (array_key_exists( $key, $newValues ) && $oldValues[$key] != $newValues[$key]) {
-                    $changes[$key] = $newValues[$key];
-                    //Log the changes
-                    $log = new Log;
-                    $log->type = "update";
-                    $log->content = "Item: <b>" . $data->itemName . "</b> " . $key . " changed from " . $oldValues[$key] . " to <b>" . $newValues[$key] . "</b>";
-                    $log->owner = Auth::user()->name;
-                    $log->save();
-                }
+        //Compare the old and new values
+        $oldValues = $data->toArray();
+        $newValues = $req->all();
+        $changes = array();
+
+        foreach ($oldValues as $key => $value) {
+            if (array_key_exists( $key, $newValues ) && $oldValues[$key] != $newValues[$key]) {
+                $changes[$key] = $newValues[$key];
+                //Log the changes
+                $log = new Log;
+                $log->type = "update";
+                $log->content = "Item: <b>" . $data->itemName . "</b> " . $key . " changed from " . $oldValues[$key] . " to <b>" . $newValues[$key] . "</b>";
+                $log->owner = Auth::user()->name;
+                $log->save();
             }
-
-            $data->itemName = $req->itemName;
-            $data->room = $req->room;
-            $data->count = $req->count;
-            $data->category = $req->category;
-            $data->measure = $req->measure;
-            $data->company = $req->company;
-            $data->provider = $req->provider;
-            $data->description = $req->description;
-            $data->status = $req->status;
-            $data->proforma = $req->proforma;
-            $data->save();
-            return redirect()->back()->with( 'success', 'Record updated successfully' );
-
-        } else {
-            return redirect( 'login' );
         }
+
+        $data->itemName = $req->itemName;
+        $data->room = $req->room;
+        $data->count = $req->count;
+        $data->category = $req->category;
+        $data->measure = $req->measure;
+        $data->company = $req->company;
+        $data->provider = $req->provider;
+        $data->description = $req->description;
+        $data->status = $req->status;
+        $data->proforma = $req->proforma;
+        $data->save();
+        return redirect()->back()->with( 'success', 'Record updated successfully' );
+
+
     }
 
     function AddItem(Request $req)
@@ -188,33 +182,31 @@ class ItemController extends Controller
         ] );
 
 
-        if (Auth::check()) {
-            $data = new Product;
-            $data->project = session()->get( 'project' );
-            $data->itemName = $req->itemName;
-            $data->room = $req->room;
-            $data->count = $req->count;
-            $data->category = $req->category;
-            $data->measure = $req->measure;
-            $data->company = $req->company;
-            $data->provider = $req->provider;
-            $data->description = $req->description;
-            $data->status = $req->status;
-            $data->proforma = $req->proforma;
-            $data->save();
 
-            $log = new Log;
-            $log->type = "add";
-            $log->content = "Item: " . $data->itemName . " added to " . $data->room;
-            $log->owner = Auth::user()->name;
-            $log->save();
+        $data = new Product;
+        $data->project = session()->get( 'project' );
+        $data->itemName = $req->itemName;
+        $data->room = $req->room;
+        $data->count = $req->count;
+        $data->category = $req->category;
+        $data->measure = $req->measure;
+        $data->company = $req->company;
+        $data->provider = $req->provider;
+        $data->description = $req->description;
+        $data->status = $req->status;
+        $data->proforma = $req->proforma;
+        $data->save();
+
+        $log = new Log;
+        $log->type = "add";
+        $log->content = "Item: " . $data->itemName . " added to " . $data->room;
+        $log->owner = Auth::user()->name;
+        $log->save();
 
 
-            return redirect()->back()->with( 'success', $data->itemName . ' added successfully to ' . $data->room );
+        return redirect()->back()->with( 'success', $data->itemName . ' added successfully to ' . $data->room );
 
-        } else {
-            return redirect( 'login' );
-        }
+
     }
 
 
