@@ -31,9 +31,18 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/delete/{id}', [ItemController::class, 'destroy']);
-Route::post('/update/{id}', [ItemController::class, 'update']);
-Route::post('/addItem', [ItemController::class, 'addItem']);
+
+
+Route::get('/search',  [ItemController::class, 'Search']);
+Route::get('/ClearSearch', [ItemController::class, 'ClearSearch']);
+
+
+Route::get('/AddFilter', [ItemController::class, 'AddFilter']);
+Route::get('/RemoveFilter', [ItemController::class, 'RemoveFilter']);
+Route::get('/ClearFilter', [ItemController::class, 'ClearFilters']);
+Route::get('/list', [ItemController::class, 'show']);
+Route::get('/list/{project}', [ItemController::class, 'setProject']);
+
 
 Route::middleware('auth')->group(function () {
     //Breeze Routes
@@ -41,22 +50,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
-    //My routes
-    Route::get('/list', [ItemController::class, 'show']);
-
-
-
+    //My routes    
     Route::post('/AddItem', [ItemController::class, 'AddItem']);
-    Route::get('/AddFilter', [ItemController::class, 'AddFilter']);
-    Route::get('/RemoveFilter', [ItemController::class, 'RemoveFilter']);
-    Route::get('/ClearFilter', [ItemController::class, 'ClearFilters']);
-
-    Route::get('/search',  [ItemController::class, 'Search']);
-    Route::get('/ClearSearch', [ItemController::class, 'ClearSearch']);
-    
-    Route::get('/list/{project}', [ItemController::class, 'setProject']);
-
+    Route::post('/delete/{id}', [ItemController::class, 'destroy']);
+    Route::post('/update/{id}', [ItemController::class, 'update']);
+    Route::post('/addItem', [ItemController::class, 'addItem']);
     Route::get("logs", [LogController::class, "index"]);
 
 });

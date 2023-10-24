@@ -34,11 +34,10 @@ class ItemController extends Controller
 
 
 
-            $shownItems = $shownItems->orderBy('room', 'desc')->paginate( 100 );
+            $shownItems = $shownItems->orderBy('room', 'desc')->paginate( 20 );
             return view( 'list', [
                 'products' => $shownItems,
-                'currentProject' => $currentProject,
-                
+                'currentProject' => $currentProject,         
                 'filterList' => $filterList
             ] );
         } else {
