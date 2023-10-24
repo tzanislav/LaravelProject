@@ -31,10 +31,7 @@ class ItemController extends Controller
             $filterValue = $filterParts[1];
             $shownItems = $shownItems->where( $filterField, $filterValue );
         }
-
-
-
-        $shownItems = $shownItems->orderBy( 'room', 'desc' )->paginate( 100 );
+        $shownItems = $shownItems->orderBy( 'room', 'desc' )->paginate( 500 );
         return view( 'list', [
             'products' => $shownItems,
             'currentProject' => $currentProject,
