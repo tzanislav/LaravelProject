@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\execute;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+Route::get('/execute', [execute::class, 'execute']);
 
 Route::get('/search',  [ItemController::class, 'Search']);
 Route::get('/ClearSearch', [ItemController::class, 'ClearSearch']);
