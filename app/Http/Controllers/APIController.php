@@ -13,22 +13,22 @@ class APIController extends Controller
     //
     function getData()
     {
-        $data = Product::all(); // Replace 'Data' with your model name
+        $data = Product::all(); 
         return response()->json($data);
     }
     function getCategories()
     {
-        $data = Category::all(); // Replace 'Data' with your model name
+        $data = Category::all(); 
         return response()->json($data);
     }
     function getCompanies()
     {
-        $data = Company::all(); // Replace 'Data' with your model name
+        $data = Company::all();
         return response()->json($data);
     }
     function getStatues()
     {
-        $data = Status::all(); // Replace 'Data' with your model name
+        $data = Status::all(); 
         return response()->json($data);
     }
 }

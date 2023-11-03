@@ -39,11 +39,7 @@ class ItemController extends Controller
 
     }
 
-    function getData()
-    {
-        $data = Product::all(); // Replace 'Data' with your model name
-        return response()->json($data);
-    }
+
 
     public function AddFilter(Request $req)
     {
