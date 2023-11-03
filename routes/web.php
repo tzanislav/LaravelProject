@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LogController;
@@ -43,6 +44,13 @@ Route::get('/RemoveFilter', [ItemController::class, 'RemoveFilter']);
 Route::get('/ClearFilter', [ItemController::class, 'ClearFilters']);
 Route::get('/list', [ItemController::class, 'show']);
 Route::get('/list/{project}', [ItemController::class, 'setProject']);
+
+//API
+Route::get('/api/data', [APIController::class, 'getData']);
+Route::get('/api/categories', [APIController::class, 'getCategories']);
+Route::get('/api/companies', [APIController::class, 'getCompanies']);
+Route::get('/api/statues', [APIController::class, 'getStatues']);
+
 
 
 Route::middleware('auth')->group(function () {

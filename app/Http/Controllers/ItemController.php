@@ -16,7 +16,6 @@ class ItemController extends Controller
     //
     function show()
     {
-
         global $shownItems;
 
         $filterList = session()->get( 'filterList' );
@@ -32,12 +31,18 @@ class ItemController extends Controller
             $shownItems = $shownItems->where( $filterField, $filterValue );
         }
         $shownItems = $shownItems->orderBy( 'room', 'desc' )->paginate( 500 );
-        return view( 'list_fancy', [
+        return view( 'listVue', [
             'products' => $shownItems,
             'currentProject' => $currentProject,
             'filterList' => $filterList
         ] );
 
+    }
+
+    function getData()
+    {
+        $data = Product::all(); // Replace 'Data' with your model name
+        return response()->json($data);
     }
 
     public function AddFilter(Request $req)
