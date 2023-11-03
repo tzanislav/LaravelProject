@@ -47,7 +47,11 @@
     <x-header data="List"/>
 
     <div id="app">
+        <div>   
+            <button @click="toggleFilters" class="showFilters">Toggle Filters</button>
+        </div>
         <div class="filters" v-if="showFilters">
+            
             <div>
                 <button @click="clearFilters" id="clearFilters">Clear</button>
             </div>
@@ -63,6 +67,10 @@
                 <div class="filterHeader">Companies</div>
                 <button class="filterButton "v-for="company in companies" :key="company" @click="addFilter('company',company)" :class="{activeButton: filterPresent('company',company)}">@{{company}}</button><br>
             </div>
+            <div id="filtersCompanies" class="dropdown"> 
+                <div class="filterHeader">Provider</div>
+                <button class="filterButton "v-for="provider in providers" :key="provider" @click="addFilter('provider',provider)" :class="{activeButton: filterPresent('provider',provider)}">@{{provider}}</button><br>
+            </div>
             <div id="filtersStatuses" class="dropdown">   
                 <div class="filterHeader">Statuses</div>
                 <button class="filterButton "v-for="status in statuses" :key="status" @click="addFilter('status',status)" :class="{activeButton: filterPresent('status',status)}">@{{status}}</button><br>
@@ -70,9 +78,7 @@
 
         </div>
 
-        <div>   
-            <button @click="toggleFilters">Toggle Filters</button>
-        </div>
+
 
         <p> Showing @{{filteredData.length}} items</p>
         <!-- Table of items -->

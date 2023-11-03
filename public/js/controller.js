@@ -59,6 +59,7 @@ const app = Vue.createApp({
                 if(item.room.length > 1)
                 {  
                   this.categories.push(item.category);
+
                   console.log("Added category: " + item.category);
                 }
               }
@@ -84,6 +85,24 @@ const app = Vue.createApp({
                 }
               }
           });
+      },
+      applyAllFilters() {
+        this.filters2 = [];
+        this.rooms.forEach(room => {
+          this.addFilter("room", room);
+        });
+        this.categories.forEach(category => {
+          this.addFilter("category", category);
+        });
+        this.companies.forEach(company => {
+          this.addFilter("company", company);
+        });
+        this.providers.forEach(provider => {
+          this.addFilter("provider", provider);
+        });
+        this.statuses.forEach(status => {
+          this.addFilter("status", status);
+        });
       }
       ,
       filterPresent(filterType, filterContent) {
@@ -102,7 +121,9 @@ const app = Vue.createApp({
           //For each filter
           this.filters2.forEach(filter => {
             if(item[filter.type] && filter.content && item[filter.type].toLowerCase() == filter.content.toLowerCase()) {
-              filteredData.push(item);
+              if(!filteredData.some(f => f === item)) {
+                filteredData.push(item);
+              }              
             }
           });
           //End for each filter
@@ -118,6 +139,7 @@ const app = Vue.createApp({
           this.data = response.data;
           console.log("Got data");
           this.generateFilter();
+          //this.applyAllFilters();
         })
         .catch(error => {
           console.error('Error fetching data:', error);
