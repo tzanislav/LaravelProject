@@ -22,6 +22,7 @@
 {
     max-width: 90%;
     margin: 50px auto; 
+    text-align: center;
     
 }
 
@@ -40,11 +41,12 @@
 
 .showFilters
 {   
-    width: 100%;
+    width: 256px;
     height: 32px;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     border: none;
+    border-radius: 16px;
 }
 
 .showFilters:hover
@@ -63,7 +65,7 @@
 
 .activeButton
 {
-    background: gray;
+    background: rgb(160, 1, 1);
     background-color: #3e8e41;
     color: rgb(165, 5, 0);
     text-decoration: underline;
@@ -85,10 +87,13 @@
 }
 #clearFilters
 {
-    width: 100%;
+    width: 256px;
     height: 32px;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 16px;
+    margin: 10px auto;
 }
 
 
@@ -208,6 +213,16 @@
     margin: 24px 0px;
 }
 
+#statusBar
+{
+    width: 100%;
+    height: 32px;
+    vertical-align: middle;
+    position: relative;
+    left: -10px;
+    padding: 10px, 0px;
+}
+
 
 
 @media only screen and (max-width: 600px)
@@ -224,7 +239,6 @@
     #statusBar
     {
         width: 100%;
-        background-color: #3e8e41;
     }
     
 }

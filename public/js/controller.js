@@ -11,7 +11,9 @@ const app = Vue.createApp({
         companies: [],
         providers: [],
         statuses: [],
+        staticStatuses: [],
         showFilters: false,
+        search: '',
         }
     },
     methods: {
@@ -35,12 +37,11 @@ const app = Vue.createApp({
             if(filterExists)
             {
                 this.filters2 = this.filters2.filter(f => f.type !== filterType || f.content !== filterContent);
-                console.log("Removed filter: " + filterType + " " + filterContent);
                 return;
             }
 
             this.filters2.push({"type":filterType, "content": filterContent});
-            console.log("Added filter: " + filterType + " " + filterContent);
+
         },
         removeFilter(filterType, filterContent)
         {
@@ -85,52 +86,66 @@ const app = Vue.createApp({
                 }
               }
           });
-      },
-      applyAllFilters() {
-        this.filters2 = [];
-        this.rooms.forEach(room => {
-          this.addFilter("room", room);
-        });
-        this.categories.forEach(category => {
-          this.addFilter("category", category);
-        });
-        this.companies.forEach(company => {
-          this.addFilter("company", company);
-        });
-        this.providers.forEach(provider => {
-          this.addFilter("provider", provider);
-        });
-        this.statuses.forEach(status => {
-          this.addFilter("status", status);
-        });
       }
       ,
       filterPresent(filterType, filterContent) {
         return this.filters2.some(f => f.type === filterType && f.content === filterContent);
+      },
+      activeColor (item) {
+        if(item == null)
+        {
+          return "white";
+        }
+        let status = this.staticStatuses.find(s => s.name.toLowerCase() === item.toLowerCase());
+        if(status == null)
+        {
+          return "gray";
+        }
+        return status.image;
       }
         
     }
     ,computed: {
       filteredData() {
         let filteredData = [];
-        if(this.filters2.length == 0) {
+        if(this.filters2.length == 0 && this.search.length == 0) {
           return this.data;
+        }
+        let foundItems  = [];
+        //Search
+        if(this.search.length > 0) {
+          let types = ["itemName", "room", "category", "company", "provider", "status"];
+          
+          types.forEach(type => {
+            this.data.forEach(item => {
+              if(item[type] && item[type].toLowerCase().includes(this.search.toLowerCase())) {
+                if(!foundItems.some(f => f === item)) {
+                  foundItems.push(item);
+                  console.log("Found item: " + item.itemName);  
+                }
+              }
+            });  
+          })
+        }
+        else {
+          foundItems = this.data;
         }
 
         this.data.forEach(item => {
           //For each filter
           this.filters2.forEach(filter => {
             if(item[filter.type] && filter.content && item[filter.type].toLowerCase() == filter.content.toLowerCase()) {
-              if(!filteredData.some(f => f === item)) {
+              if(!foundItems.some(f => f === item)) {
                 filteredData.push(item);
               }              
             }
           });
-          //End for each filter
+          //End for each filter      
         });
         //End for each item
-        return filteredData;
-      }
+        return foundItems ;
+      },
+
     },
     mounted() {
       // Fetch items from API
@@ -140,6 +155,17 @@ const app = Vue.createApp({
           console.log("Got data");
           this.generateFilter();
           //this.applyAllFilters();
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+
+        axios.get('/api/statues')
+        .then(response => {
+          this.staticStatuses = response.data;
+          console.log("Got statuses");
+
+          console.log(this.staticStatuses);
         })
         .catch(error => {
           console.error('Error fetching data:', error);

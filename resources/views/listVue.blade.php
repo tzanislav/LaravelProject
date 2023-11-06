@@ -6,49 +6,14 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="/css/VueListStyle.css">
     <link rel="stylesheet" href="/css/fanctList.css">
-    <title>Learning Vue</title>
-    <!--
-    <style>
-        #app {
-            margin: 0 auto;
-            width: 800px;
-            text-align: center;
-        }
-        li
-        {
-            list-style: none;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            width: 200px;
-            cursor: pointer;
-
-        }
-
-        #filterButton
-        {
-            margin: 0 auto;
-            width: 800px;
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
-
-        li.fav {
-            color: white;
-            background-color: #f3be4a;
-
-        }
-    </style>
-    -->
+    <title>Project Vue</title>
 </head>
 <body>
     <x-header data="List"/>
 
     <div id="app">
         <div>   
-            <button @click="toggleFilters" class="showFilters">Toggle Filters</button>
+            <button @click="toggleFilters" class="showFilters">Show/Hide Filters</button>
         </div>
         <div class="filters" v-if="showFilters">
             
@@ -76,6 +41,10 @@
                 <button class="filterButton "v-for="status in statuses" :key="status" @click="addFilter('status',status)" :class="{activeButton: filterPresent('status',status)}">@{{status}}</button><br>
             </div>
 
+        </div>
+
+        <div class="search">
+            <input type="text" v-model="search" placeholder="Search">
         </div>
 
 
@@ -114,12 +83,11 @@
                         <h5>Description</h5>
                         <h2>@{{item.description}}</h2>
                     </div>
-                    <div class="table_section"  id='statusBar'>
+                    <div class="table_section" id="statusBar" :style="{ 'background-color': activeColor(item.status) }">
                         <h5>Status</h5>
                         <button class="filterButton"@click="addFilter('status',item.status)">@{{item.status}}</button>
                         <br>
                     </div>
-
                 </div>
             </div>
 
