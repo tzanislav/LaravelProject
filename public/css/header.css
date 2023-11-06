@@ -21,7 +21,7 @@ body
 .navButtons
 {
     width: 100%;
-    margin: 0px 50px 0px 0px;
+    margin: 0px 24px 0px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -76,3 +76,15 @@ body
     text-decoration: none;
 }
 
+@media only screen and (max-width: 600px)
+{
+    .navMenu
+    {
+        flex-direction: column;
+        align-items: center;
+    }
+    .navMenu a{
+        margin-right: 0px; 
+        margin-bottom: 8px;
+    }
+}

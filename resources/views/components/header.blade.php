@@ -4,15 +4,16 @@
     <img src="{{ URL::asset('/images/Logo_White.png') }}" alt="image" style="height: 100px; margin: 20px;" id="logo">
    
     
-    <div style="display: flex; margin-left: 32px;" class='navButtons'>
+    <div class='navButtons'>
         <div class="navMenu">
             <a href="/">Home</a>
             <a href="/about" >Renders</a>
             <a href="/">Projects</a>
             @if (Auth::check())
+            <a href="/logs" >Logs</a>
             @if(Auth::user()->clearance > 0)           
             <a href="/admin">Admin</a>
-            <a href="/logs" >Logs</a>
+
             @endif
             @endif
         </div>
@@ -28,7 +29,7 @@
                 
                     <p>
                         <!-- Show the name of the logged-in user -->
-                         Welcome, <a href="{{ route('dashboard') }}">  {{ Auth::user()->name }} </a>
+                        <a href="{{ route('dashboard') }}">  {{ Auth::user()->name }} </a>
                     </p>
                     <p>
                         <!-- Add a logout link -->
