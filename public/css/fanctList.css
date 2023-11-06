@@ -262,7 +262,7 @@
 
 .edit_table_item button
 {
-    width: 100%;
+    width: 80%;
     height: 32px;
     border: 1px solid rgb(163, 163, 163);
     border-radius: 8px;
@@ -286,6 +286,10 @@
     font-size: 12px;
     color: rgb(163, 163, 163);
     display: block;
+}
+.edit_table_item textarea
+{
+    width: 80%;
 }
 
 .edit_table_item input
@@ -317,7 +321,7 @@
 
 
 
-@media only screen and (max-width: 600px)
+@media only screen and (max-width: 900px)
 {
     .tableItem
     {
@@ -339,7 +343,21 @@
     .edit_table_item
     {
         width: 90%;
-        margin: 16px auto;
+        margin: 50px auto;
+
+        padding: 0;
     }
-    
+    .editSection
+    {
+        width: 100%;
+
+        margin: 0;
+        padding: 0;
+    }
+
+    .editSection input
+    {
+        width: 80%;
+        margin: 10px auto;
+    }
 }
