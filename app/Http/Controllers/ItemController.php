@@ -239,4 +239,90 @@ class ItemController extends Controller
         return redirect( 'list' );
 
     }
+
+    function EditItem (Request $req)
+    { 
+        $isNew = false;
+        $data = Product::find( $req->id );
+
+
+        if($data == null){
+            error_log("Item not found, creating new");
+            $newItem = new Product;
+            $isNew = true;
+            $newItem->project = session()->get( 'project' );
+            $newItem->id = $req->id;
+            $newItem->itemName = $req->itemName;
+            $newItem->room = $req->room;
+            $newItem->count = $req->count;
+            $newItem->category = $req->category;
+            $newItem->measure = $req->measure;
+            $newItem->company = $req->company;
+            $newItem->provider = $req->provider; 
+            $newItem->description = $req->description; 
+            $newItem->status = $req->status;
+            $newItem->proforma = $req->proforma;
+            $newItem->image = $req->image;
+            $newItem->owner = Auth::user()->name;
+  
+            $newItem->save();
+            error_log("Item: " . $newItem->itemName . " created");
+            return redirect ( 'list' );
+        }
+        else{
+            //Check for changes
+            $oldValues = $data->toArray();
+            $newValues = $req->all();
+            $changes = array();
+            foreach( $oldValues as $key => $value ){
+                if(array_key_exists($key, $newValues) && $oldValues[$key] != $newValues[$key]){
+                    $changes[$key] = $newValues[$key];
+                }
+            }
+        }
+
+
+        error_log("Gathering data" . $data);
+        $data->project = session()->get( 'project' );
+        $data->itemName = $req->itemName;
+        $data->room = $req->room;
+        $data->count = $req->count;
+        $data->category = $req->category;
+        $data->measure = $req->measure;
+        $data->company = $req->company;
+        $data->provider = $req->provider;
+        $data->description = $req->description;
+        $data->status = $req->status;
+        $data->proforma = $req->proforma;
+        $data->image = $req->image;
+
+        $data->save();
+
+        foreach( $changes as $key => $value ){
+            $log = new Log;
+            $log->type = $isNew ? "Add" : "Update";
+            $log->content = "Item: " . $data->itemName . " " . $key . " changed from " . $oldValues[$key] . " to " . $newValues[$key] ;
+            $log->owner = Auth::user()->name;
+            $log->save();
+        }
+
+        error_log("Item: " . $data->itemName . " updated");
+    }
+
+    function DeleteItem (Request $req)
+    {
+        $data = Product::find( $req->id );
+        $data->delete();
+
+        $log = new Log;
+        $log->type = "delete";
+        $log->content = "Item: " . $data->itemName . " deleted";
+        $log->owner = Auth::user()->name;
+        $log->save();
+
+        error_log("Item: " . $data->itemName . " deleted");
+        return redirect ( 'list' );
+    }
+
+
 }

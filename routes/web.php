@@ -60,12 +60,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //My routes    
-    Route::post('/AddItem', [ItemController::class, 'AddItem']);
-    Route::post('/delete/{id}', [ItemController::class, 'destroy']);
-    Route::post('/update/{id}', [ItemController::class, 'update']);
-    Route::post('/addItem', [ItemController::class, 'addItem']);
+    Route::post('/editItem', [ItemController::class, 'EditItem']);
+    Route::post('/deleteItem', [ItemController::class, 'DeleteItem']);
     Route::get("logs", [LogController::class, "index"]);
-
 });
 
 require __DIR__.'/auth.php';
