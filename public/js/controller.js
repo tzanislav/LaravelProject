@@ -2,15 +2,10 @@ const app = Vue.createApp({
   data() {
     return {
       data: [],
-      filters: [],
-      filters2: [],
+      activeFilters: [],
       showAll: false,
       loading: true,
-      rooms: [],
-      categories: [],
-      companies: [],
-      providers: [],
-      statuses: [],
+      filterTypes: [{key: 'room', value: []},{key: 'category', value: []},{key: 'company', value: []},{key: 'provider', value: []},{key: 'status', value: []}],
       staticStatuses: [],
       showFilters: false,
       search: '',
@@ -28,65 +23,41 @@ const app = Vue.createApp({
     //GUI methods
     toggleFilters() {
       this.showFilters = !this.showFilters;
-    },
-    removeFilter(filterFunc) {
-      this.filters = this.filters.filter(func => func.toString() !== filterFunc.toString());
     }
     ,
     clearFilters() {
-      this.filters2 = [];
+      this.activeFilters = [];
     },
 
     addFilter(filterType, filterContent) {
-      const filterExists = this.filters2.some(f => f.type === filterType && f.content === filterContent);
+      const filterExists = this.activeFilters.some(f => f.type === filterType && f.content === filterContent);
       if (filterExists) {
-        this.filters2 = this.filters2.filter(f => f.type !== filterType || f.content !== filterContent);
+        this.activeFilters = this.activeFilters.filter(f => f.type !== filterType || f.content !== filterContent);
         return;
+       
       }
-
-      this.filters2.push({ "type": filterType, "content": filterContent });
+      this.activeFilters.push({ "type": filterType, "content": filterContent });
     },
     removeFilter(filterType, filterContent) {
-      this.filters2 = filters2.filter(f => f.type !== filterType && f.content !== filterContent);
+      this.activeFilters = activeFilters.filter(f => f.type !== filterType && f.content !== filterContent);
     },
+
     generateFilter() {
       this.data.forEach(item => {
-        if (item.room != null && !this.rooms.some(room => room.toLowerCase() === item.room.toLowerCase())) {
-          if (item.room.length > 1) {
-            this.rooms.push(item.room);
-            console.log("Added room: " + item.room);
-          }
-        }
-        if (item.category != null && !this.categories.some(category => category.toLowerCase() === item.category.toLowerCase())) {
-          if (item.room.length > 1) {
-            this.categories.push(item.category);
-
-            console.log("Added category: " + item.category);
-          }
-        }
-        if (item.company != null && !this.companies.some(company => company.toLowerCase() === item.company.toLowerCase())) {
-          if (item.company.length > 1) {
-            this.companies.push(item.company);
-            console.log("Added company: " + item.company);
-          }
-        }
-        if (item.provider != null && !this.providers.some(provider => provider.toLowerCase() === item.provider.toLowerCase())) {
-          if (item.room.length > 1) {
-            this.providers.push(item.provider);
-            console.log("Added provider: " + item.provider);
-          }
-        }
-        if (item.status != null && !this.statuses.some(status => status.toLowerCase() === item.status.toLowerCase())) {
-          if (item.room.length > 1) {
-            this.statuses.push(item.status);
-            console.log("Added status: " + item.status);
-          }
-        }
+        this.filterTypes.forEach(filter => {
+          let filterType = filter.key;
+          let filterArray = filter.value;
+          if (item[filterType] && !filterArray.some(f => f === item[filterType])) {
+            filterArray.push(item[filterType]);
+            console.log("Added " + item[filterType] + " to " + filterType);
+          }          
+        });
+        
       });
     }
     ,
     filterPresent(filterType, filterContent) {
-      return this.filters2.some(f => f.type === filterType && f.content === filterContent);
+      return this.activeFilters.some(f => f.type === filterType && f.content === filterContent);
     },
 
     //Get status color
@@ -100,7 +71,7 @@ const app = Vue.createApp({
       }
       return [status.image, "white"];
     },
-    
+
     //Get room title to separate items
     getRoomTitle(room) {
       if (this.roomTitle != room) {
@@ -112,7 +83,7 @@ const app = Vue.createApp({
     },
 
 
-//Edit items
+    //Edit items
 
     editItem(item) {
       this.action = "Update";
@@ -159,7 +130,7 @@ const app = Vue.createApp({
       this.submitDeleteForm();
     },
 
-//Send edit to server
+    //Send edit to server
     async submitForm() {
       try {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -172,6 +143,7 @@ const app = Vue.createApp({
         if (response.status === 200) {
           // Request was successful. You can handle the response here.
           this.editTarget = null;
+          this.editErrors = [];
         } else {
           // Handle errors if the server request fails.
         }
@@ -198,7 +170,9 @@ const app = Vue.createApp({
         if (response.status === 200) {
           // Request was successful. You can handle the response here.
           this.editTarget = null;
+          this.editErrors = [];
         } else {
+
           // Handle errors if the server request fails.
         }
       } catch (error) {
@@ -208,57 +182,72 @@ const app = Vue.createApp({
         }
       }
     },
-
   }
 
   , computed: {
     //Filter data by filters and search
     filteredData() {
-      let filteredData = [];
-      let foundItems = [];
-      if (this.filters2.length == 0 && this.search.length == 0) {
-        return this.data;
-      }
-
-      //Search
-      if (this.search.length > 0) {
-        let types = ["itemName", "room", "category", "company", "provider", "status"];
-
-        types.forEach(type => {
-          this.data.forEach(item => {
-            if (item[type] && item[type].toLowerCase().includes(this.search.toLowerCase())) {
-              if (!foundItems.some(f => f === item)) {
-                foundItems.push(item);
-                console.log("Found item: " + item.itemName);
-              }
+      let foundItems = this.data; // Start with a copy of the original data
+      const searchLower = this.search.toLowerCase();
+    
+      if (searchLower.length > 0) {
+        foundItems = foundItems.filter(item => {
+          for (let type of ["itemName", "room", "category", "company", "provider", "status"]) {
+            if (item[type] && item[type].toLowerCase().includes(searchLower)) {
+              return true;
             }
-          });
-        })
+          }
+          return false;
+        });
       }
-      else {
-        foundItems = this.data;
-      }
-
-      if (this.filters2.length == 0) {
+    
+      if(this.activeFilters.length == 0) {
         return foundItems;
       }
 
-      foundItems.forEach(item => {
-        //For each filter
-        this.filters2.forEach(filter => {
-          if (item[filter.type] && filter.content && item[filter.type].toLowerCase() == filter.content.toLowerCase()) {
-            if (!filteredData.some(f => f === item)) {
-              filteredData.push(item);
+      let output = foundItems;                      //This all items now
+
+      this.filterTypes.forEach(filter => {          //This are the five types of filters                                      
+        let filterType = filter.key;  
+                                              
+        let activeFiltersOfType = [];               //Get all active filters that are of that type:
+        this.activeFilters.forEach(activeFilter => {
+          if(activeFilter.type === filterType)
+            {
+            activeFiltersOfType.push(activeFilter);
             }
-          }
+          });
+
+        if(activeFiltersOfType.length == 0)
+          return;
+
+        //We fisrt add all items that match the filters of the same type
+        let stepOutput = [];
+        activeFiltersOfType.forEach(activeFilter => {
+          
+          let acttiveFilterContent = activeFilter.content;
+          console.log(acttiveFilterContent)
+
+          //Find the items that match and add them to an array
+          console.log ("StepOutput length is =======> " +  stepOutput.length + " and Output is ==> " + output.length);
+          output.forEach(item => {
+              if(item[filterType] === acttiveFilterContent)
+              {
+                stepOutput.push(item);
+              }
+          });
+          console.log ("Output length now is ==============> " +  stepOutput.length);
+          
+         
         });
-        //End for each filter      
-      });
-      //End for each item
+        output = stepOutput; // Put the items that matched in the output so the next step can reduce them further
 
-      return filteredData;
-    },
+    });
 
+      console.log("Found items: " + output.length);
+      return output;
+    }
+    
   },
   mounted() {
 
@@ -291,7 +280,7 @@ const app = Vue.createApp({
         });
 
         this.generateFilter();
-        
+
       })
       .catch(error => {
         console.error('Error fetching data:', error);

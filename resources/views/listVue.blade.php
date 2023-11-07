@@ -13,44 +13,35 @@
     <x-header data="List"/>
 
     <div id="app">
-        <div>   
-            <button @click="toggleFilters" class="showFilters">Show/Hide Filters</button>
+        <div class="addItemButtons" @click="addItem">   
+            <p>Add item</p>
+            <img src="https://laravel-tzani.s3.eu-west-1.amazonaws.com/img/add.png">
         </div>
-        <div class="filters" v-if="showFilters">
-            
-            <div>
-                <button @click="clearFilters" id="clearFilters">Clear</button>
-            </div>
-            <div id="filtersRooms" class="dropdown">
-                <div class="filterHeader">Rooms</div>
-                <button class="filterButton "v-for="room in rooms" :key="room" @click="addFilter('room',room)" :class="{activeButton: filterPresent('room',room)}">@{{room}}</button><br>
-            </div>
-            <div id="filtersCategories" class="dropdown">
-                <div class="filterHeader">Categories</div>
-                <button class="filterButton "v-for="category in categories" :key="category" @click="addFilter('category',category)" :class="{activeButton: filterPresent('category',category)}">@{{category}}</button><br>
-            </div>
-            <div id="filtersCompanies" class="dropdown"> 
-                <div class="filterHeader">Companies</div>
-                <button class="filterButton "v-for="company in companies" :key="company" @click="addFilter('company',company)" :class="{activeButton: filterPresent('company',company)}">@{{company}}</button><br>
-            </div>
-            <div id="filtersCompanies" class="dropdown"> 
-                <div class="filterHeader">Provider</div>
-                <button class="filterButton "v-for="provider in providers" :key="provider" @click="addFilter('provider',provider)" :class="{activeButton: filterPresent('provider',provider)}">@{{provider}}</button><br>
-            </div>
-            <div id="filtersStatuses" class="dropdown">   
-                <div class="filterHeader">Statuses</div>
-                <button class="filterButton "v-for="status in statuses" :key="status" @click="addFilter('status',status)" :class="{activeButton: filterPresent('status',status)}">@{{status}}</button><br>
-            </div>
-
-        </div>
-
         <div class="search">
             <input type="text" v-model="search" placeholder="Search">
         </div>
-
-        <div>   
-            <button @click="addItem" class="showFilters">Add item</button>
+        <div class="filterSticky"  v-if="activeFilters.length">
+            <div class="activeFilterPill" v-for="activefilter in activeFilters" :key="activefilter" @click="addFilter(activefilter.type,activefilter.content)"> @{{activefilter.content}}</div>
+            <button @click="clearFilters" id="clearFilters">Clear</button>
         </div>
+
+
+        <div class="filters" v-if="showFilters">      
+            <div id="filtersRooms" class="dropdown" v-for="filterType in filterTypes" :key="filterType">
+                <div class="filterHeader">@{{filterType.key}}</div>
+                <button class="filterButton "v-for="filter in filterType.value" :key="filter" @click="addFilter(filterType.key,filter)" :class="{activeButton: filterPresent(filterType.key,filter)}">@{{filter}}</button><br>
+            </div>
+            <div>
+                <button @click="clearFilters" id="clearFilters">Clear Filters</button>
+            </div>
+        </div>
+        <div>   
+            <button @click="toggleFilters" class="showFilters">@{{showFilters ? "Hide" : "Show"}}  Filters</button>
+        </div>
+
+
+
+
 
         <div v-if="errors">
             <div v-for="error in errors" :key="error" class="error">
