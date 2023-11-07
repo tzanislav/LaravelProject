@@ -7,6 +7,7 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\execute;
+use App\Http\Controllers\FileUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +52,9 @@ Route::get('/api/categories', [APIController::class, 'getCategories']);
 Route::get('/api/companies', [APIController::class, 'getCompanies']);
 Route::get('/api/statues', [APIController::class, 'getStatues']);
 
-
+//Upload
+Route::get('upload', [ FileUploadController::class, 'showUploadForm' ]);
+Route::post('upload', [ FileUploadController::class, 'uploadFile' ]);
 
 Route::middleware('auth')->group(function () {
     //Breeze Routes

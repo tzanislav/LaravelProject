@@ -117,8 +117,23 @@
 
                         <div class="editSection">
                             <img :src = "editTarget.image">
+
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            <form id="fileUploadForm" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label for="file">Select File</label>
+                                <input type="file"  @change="upload($event)" id="file-input">
+                            </div>
+                            </form>
+
                             <label for="image" id="editLabel_image"> Image URL </label>
-                            <input type="text" name="image" id="editLabel_image" placeholder = "e.g. somthing.png" v-model = "editTarget.image" v-model = "editTargetFields" >
+                            <input type="text" name="image" id="editLabel_image" placeholder = "e.g. somthing.png" v-model = "editTargetFields" >
                         </div>
                         <div class="editSection">
                             <label for="itemName" id="editLabel_itemName"> Name </label>
