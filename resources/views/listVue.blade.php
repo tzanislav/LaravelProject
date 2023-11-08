@@ -87,9 +87,9 @@
                     @if (auth()->user()->clearance > 1)
                     <div class="table_section">
                         <h5>Price</h5>
-                        <h1>@{{item.price1.length ? item.price1 : "No Price" }} лв.</h1>
+                        <h1>@{{item.price1}} лв.</h1>
                         <h5>Price 2</h5>
-                        <h1>@{{item.price2.length ? item.price2 : "No Price" }} лв.</h1>
+                        <h1>@{{item.price2}} лв.</h1>
                     </div>
                     @endif
                     @endif
