@@ -36,18 +36,14 @@
             </div>
         </div>
         <div>   
-            <button @click="toggleFilters" class="showFilters">@{{showFilters ? "Hide" : "Show"}}  Filters</button>
+            <button @click="toggleFilters" class="showFilters">@{{showFilters ? "▲ Hide Filters ▲" : "▼ Show Filters ▼"}}  </button>
         </div>
 
 
 
 
 
-        <div v-if="errors">
-            <div v-for="error in errors" :key="error" class="error">
-                @{{error}}
-            </div>
-        </div>
+
 
 
         <p> Showing @{{filteredData.length}} items</p>
@@ -57,6 +53,7 @@
                 <!-- Check if the current room is different from the previous room -->
                 <div class="roomTitle" v-if="index === 0 || item.room !== filteredData[index - 1].room">
                     <h1>@{{ item.room }}</h1>
+                    <hr/>
                 </div>
 
                 <div class="fancy_table_item">
@@ -109,21 +106,9 @@
         <div class="editModal" v-if="editTarget" @click.self = "closeEdit">
             <div class="edit_table_item">
                     <h1>Edit Item</h1>  
-                        <div class="editSection">   
-                            <div v-if="editErrors.length" :key="error" class="error">
-                                <h4 >@{{editErrors}}</h4>
-                            </div>
-                        </div>
-
+                    <h5>Click "Update" to save changes</h5>
                         <div class="editSection">
                             <img :src = "editTarget.image">
-
-                            @if (session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
                             <form id="fileUploadForm" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
@@ -131,10 +116,17 @@
                                 <input type="file"  @change="upload($event)" id="file-input">
                             </div>
                             </form>
-
+                            <div v-if="uploadMessages.length">
+                                <div v-for="message in uploadMessages" :key="message"  :style="{color : (message.type == 'error' ? 'red' : 'green') }">
+                                    <h3>@{{message.message}}</h3>
+                                </div>
+                            </div>
                             <label for="image" id="editLabel_image"> Image URL </label>
-                            <input type="text" name="image" id="editLabel_image" placeholder = "e.g. somthing.png" v-model = "editTargetFields" >
+                            <input type="text" name="image" id="editLabel_image" placeholder = "e.g. somthing.png" v-model = "editTarget.image" v-model = "editTargetFields" >
                         </div>
+
+
+
                         <div class="editSection">
                             <label for="itemName" id="editLabel_itemName"> Name </label>
                             <input type="text" name="itemName" id="editItem_itemName" placeholder = "e.g. Висяща Лампа" v-model = "editTarget.itemName"  v-model = "editTargetFields">
@@ -185,7 +177,11 @@
                             <label for="proforma" id="editLabel_proforma">Proforma No.</label>
                             <input type="text" name="proforma" id="editItem_proforma" placeholder = "e.g. 1707" v-model = "editTarget.proforma"  v-model = "editTargetFields">
                         </div>
-
+                        <div class="editSection">   
+                            <div v-if="editErrors.length" class="error">
+                                <h2 v-for="message in editErrors" :key="message" :style="{color : (message.type == 'error' ? 'red' : 'green') }">@{{message.message}}</h2>
+                            </div>
+                        </div>
 
 
                         <button @click="submitForm">@{{action}}</button>

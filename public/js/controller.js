@@ -17,7 +17,7 @@ const app = Vue.createApp({
       roomTitle: "",
       action: "Update",
       file: null,
-      uploadMessage: '',
+      uploadMessages: [],
     }
   },
   methods: {
@@ -36,7 +36,6 @@ const app = Vue.createApp({
       if (filterExists) {
         this.activeFilters = this.activeFilters.filter(f => f.type !== filterType || f.content !== filterContent);
         return;
-
       }
       this.activeFilters.push({ "type": filterType, "content": filterContent });
     },
@@ -136,6 +135,23 @@ const app = Vue.createApp({
 
     //Send edit to server
     async submitForm() {
+      this.editErrors = [];
+
+      if (this.editTarget.itemName == "") {
+        this.editErrors.push({type: "error",message: "Името на артикула не може да е празно"});
+        return;
+      }
+      if (this.editTarget.room == "") {
+        this.editErrors.push({type: "error",message: "Не е въведена стая"});
+        return;
+      }
+      if (this.editTarget.category == "") {
+        this.editErrors.push({type: "error",message: "Не е въведена категория"});
+        return;
+      }
+
+
+
       try {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const response = await axios.post('/editItem', this.editTarget, {
@@ -188,20 +204,26 @@ const app = Vue.createApp({
     },
     
     async upload(event) {
+      this.uploadMessages = [];
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
       console.log(event.target.files[0]);
       try {
         let data = new FormData();
         let file = event.target.files[0];
 
+        //Check if file is image
+        if (!file.type.match('image.*')) {
+          this.uploadMessages.push({ type: "error", message: "File is not an image" });
+          return;
+        }
+        //Check if file is too big
+        if (file.size > 2500000) {
+          this.uploadMessages.push({ type: "error", message: "Too Big, Max size: 2.5 MB" });
+          return;
+        }
+
         data.append('name', 'my-file')
         data.append('file', file)
-
-        let config = {
-          header: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
 
         const response = await axios.post('/upload', data, {
           headers: {
@@ -212,6 +234,7 @@ const app = Vue.createApp({
         if (response.status === 200) {
           console.log("File uploaded " + response.data);
           this.editTarget.image = response.data.url;
+          this.uploadMessages.push({ type: "success", message: "Image uploaded" });
 
         } else {
           // Handle errors if the server request fails.
