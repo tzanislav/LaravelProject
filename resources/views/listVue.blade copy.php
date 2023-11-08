@@ -19,7 +19,6 @@
         </div>
         <div class="search">
             <input type="text" v-model="search" placeholder="Search">
-            <button v-if="search.length" @click="() => {search = ''}"  class="clearSearch">X</button>
         </div>
         <div class="filterSticky"  v-if="activeFilters.length">
             <div class="activeFilterPill" v-for="activefilter in activeFilters" :key="activefilter" @click="addFilter(activefilter.type,activefilter.content)"> @{{activefilter.content}}</div>
@@ -60,7 +59,7 @@
                 <div class="fancy_table_item">
 
                     <div class="table_section" id="itemImage">
-                        <img :src =item.image @click = "editItem(item)">
+                        <img :src =item.image>
                     </div>
 
                     <div class="table_section ">
@@ -83,14 +82,10 @@
                         <h5>@{{item.measure}}</h5>
                         <h1>@{{item.count}}</h1>
                     </div>
-                    @if (auth()->user()->clearance > 1)
                     <div class="table_section">
-                        <h5>Price</h5>
-                        <h1>@{{item.price1.length ? item.price1 : "No Price" }} лв.</h1>
-                        <h5>Price 2</h5>
-                        <h1>@{{item.price2.length ? item.price2 : "No Price" }} лв.</h1>
+                        <h5>Description</h5>
+                        <h2>@{{item.description}}</h2>
                     </div>
-                    @endif
                     <div class="table_section" id="statusBar" :style="{ 'background-color': activeColor(item.status)[0]}" @click = "editItem(item)">
                         <h5>Status</h5>
                         <h2 :style= "{color :  activeColor(item.status)[1]}">@{{item.status}}</h2>
@@ -182,15 +177,6 @@
                             <label for="proforma" id="editLabel_proforma">Proforma No.</label>
                             <input type="text" name="proforma" id="editItem_proforma" placeholder = "e.g. 1707" v-model = "editTarget.proforma"  v-model = "editTargetFields">
                         </div>
-                        @if (auth()->user()->clearance > 1)
-                        <div class="editSection">   
-                            <label for="price1" id="editLabel_price1">Price 1</label>
-                            <input type="number" name="price1" id="editItem_price1" min="0" max="100000" placeholder = "e.g. 1000" v-model = "editTarget.price1"  v-model = "editTargetFields">
-                            <label for="price2" id="editLabel_price2">Price 2</label>
-                            <input type="number" name="price2" id="editItem_price2" min="0" max="100000" placeholder = "e.g. 880" v-model = "editTarget.price2"  v-model = "editTargetFields">
-                        </div>
-                        @endif
-
                         <div class="editSection">   
                             <div v-if="editErrors.length" class="error">
                                 <h2 v-for="message in editErrors" :key="message" :style="{color : (message.type == 'error' ? 'red' : 'green') }">@{{message.message}}</h2>

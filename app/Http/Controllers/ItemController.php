@@ -263,6 +263,12 @@ class ItemController extends Controller
             $newItem->status = $req->status;
             $newItem->proforma = $req->proforma;
             $newItem->image = $req->image;
+            if($req->price1)
+                $newItem->price1 = $req->price1;
+            if($req->price2)
+                $newItem->price2 = $req->price2;
+            $newItem->created_at = now();
+            $newItem->updated_at = now(); 
             $newItem->owner = Auth::user()->name;
   
             $newItem->save();
@@ -295,6 +301,11 @@ class ItemController extends Controller
         $data->status = $req->status;
         $data->proforma = $req->proforma;
         $data->image = $req->image;
+        if($req->price1)
+            $data->price1 = $req->price1;
+        if($req->price2)
+            $data->price2 = $req->price2;
+        $data->updated_at = now();
 
         $data->save();
 

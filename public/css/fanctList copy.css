@@ -8,7 +8,7 @@
 }
 .table
 {
-    max-width: min(1200px, 90%);
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -158,6 +158,8 @@
 }
 .fancy_table_item
 {
+    min-height: 128px;
+
     border: 1px solid rgb(163, 163, 163);
     border-radius: 8px;
     margin: 10px;
@@ -165,11 +167,10 @@
 
 .fancy_table_item img
 {
-    max-height: 64px;
-    max-width: 64px;
+    max-height: 128px;
+    max-width: 128px;
     border-radius: 8px;
     filter: drop-shadow(1px 3px 2px rgb(163, 163, 163));
-    cursor: pointer;
 }
 
 .fancy_table_item h1
@@ -256,13 +257,17 @@
 
 #statusBar
 {
+    width: 50%;
     height: 40px;
 
     border-radius: 20px;
     padding: 10px, 0px;
     margin: 12px auto;
 
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
     border: solid 1px rgb(224, 224, 224);
 }
 
@@ -400,23 +405,6 @@
     font-weight: bold;
 }
 
-.clearSearch
-{
-    border: solid 2px rgb(58, 58, 58);
-    height: 24px;
-    width: 24px;
-    border-radius: 12px;
-    background-color: white;
-
-    font-size: 12px;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-    margin: 0 8px;
-    padding: 0;
-    cursor: pointer;
-
-}
-
 .filterHeader
 {
     text-transform: uppercase;
@@ -472,40 +460,19 @@
 {
     .tableItem
     {
-        width: 100%;
+        width: 90%;
         margin: 16px auto;
     }
 
-
-    #itemImage img
+    #itemImage
     {
-        max-height: 64px;
+        display: none;
     }
     #statusBar
     {
-        border-radius: 8px;
+        width: 70%;
+        border-radius: 10px;
     
-    }
-
-    .table_section
-    {
-        font-size: 10px;
-        min-width: 64px;
-    }
-
-    .table_section h1
-    {
-        font-size: inherit;
-    }
-    
-    .table_section h2
-    {
-        font-size: inherit;
-    }
-
-    .table_section h5
-    {
-        font-size: inherit;
     }
 
     .edit_table_item
