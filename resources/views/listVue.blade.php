@@ -83,6 +83,7 @@
                         <h5>@{{item.measure}}</h5>
                         <h1>@{{item.count}}</h1>
                     </div>
+                    @if (Auth::check())
                     @if (auth()->user()->clearance > 1)
                     <div class="table_section">
                         <h5>Price</h5>
@@ -90,6 +91,7 @@
                         <h5>Price 2</h5>
                         <h1>@{{item.price2.length ? item.price2 : "No Price" }} лв.</h1>
                     </div>
+                    @endif
                     @endif
                     <div class="table_section" id="statusBar" :style="{ 'background-color': activeColor(item.status)[0]}" @click = "editItem(item)">
                         <h5>Status</h5>
@@ -182,6 +184,7 @@
                             <label for="proforma" id="editLabel_proforma">Proforma No.</label>
                             <input type="text" name="proforma" id="editItem_proforma" placeholder = "e.g. 1707" v-model = "editTarget.proforma"  v-model = "editTargetFields">
                         </div>
+                        @if (Auth::check())
                         @if (auth()->user()->clearance > 1)
                         <div class="editSection">   
                             <label for="price1" id="editLabel_price1">Price 1</label>
@@ -189,6 +192,7 @@
                             <label for="price2" id="editLabel_price2">Price 2</label>
                             <input type="number" name="price2" id="editItem_price2" min="0" max="100000" placeholder = "e.g. 880" v-model = "editTarget.price2"  v-model = "editTargetFields">
                         </div>
+                        @endif
                         @endif
 
                         <div class="editSection">   
