@@ -8,6 +8,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\execute;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,10 @@ Route::get('/api/statues', [APIController::class, 'getStatues']);
 Route::get('upload', [ FileUploadController::class, 'showUploadForm' ]);
 Route::post('upload', [ FileUploadController::class, 'uploadFile' ]);
 
+
+
+
+
 Route::middleware('auth')->group(function () {
     //Breeze Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -66,6 +71,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/editItem', [ItemController::class, 'EditItem']);
     Route::post('/deleteItem', [ItemController::class, 'DeleteItem']);
     Route::get("logs", [LogController::class, "index"]);
+
+    //Admin
+    Route::get('/admin', [AdminController::class, 'Index']);
+    Route::post('/admin/{id}', [AdminController::class, 'Update']);
 });
 
 require __DIR__.'/auth.php';
