@@ -54,7 +54,7 @@
     background: white;
     position: sticky;
     top: 0px;
-    z-index: 1000;
+    z-index: 9;
 
 
 }
@@ -93,7 +93,7 @@
     margin: 0px auto;
     position: relative;
     top: 10px;
-    z-index: 1001;
+    z-index: 10;
 }
 
 .showFilters:hover {
@@ -142,7 +142,7 @@
 }
 
 #clearFilters:hover {
-    background-color: #94c296;
+    background-color: #bbbbbb;
     color: white;
 }
 
@@ -279,6 +279,7 @@
     left: 0;
     background-color: rgba(0, 0, 0, 0.301);
     overflow-y: scroll;
+    z-index: 100;
 }
 
 .editModal img {
@@ -506,10 +507,11 @@
 
     .filters
     {
+        max-height: 80vh;
         white-space: nowrap;
         position: relative;
         overflow-x: scroll;
-        overflow-y: hidden;
+        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
 
