@@ -55,13 +55,28 @@
     vertical-align: middle;
 }
 
+.filters-tab
+{
+    filter: drop-shadow(0px 5px 2px rgb(163, 163, 163));
+    background: white;
+    position: sticky;
+    top: 0px;
+    z-index: 1000;
+    
+
+}
+
 .filters
 {
     max-width: 90%;
     margin: 50px auto; 
     text-align: center;
+    background: white;
+    max-height: 80%;   
     
 }
+
+
 
 .filters button
 {   
@@ -78,13 +93,17 @@
 
 .showFilters
 {   
+    background-color: white;
     width: 256px;
     height: 32px;
     text-align: center;
-    font-size: 18px;
+    font-size: 12px;
     border: none;
     border-radius: 16px;
-    margin: 12px auto;
+    margin: 0px auto;
+    position: relative;
+    top: 10px;
+    z-index: 1001;
 }
 
 .showFilters:hover
@@ -132,11 +151,15 @@
     border: none;
     border-radius: 16px;
     margin: 10px auto;
-    background-color: rgb(94, 94, 94);
-    color: #d3d3d3;
+    background: none;
+    color: #414141;
 }
 
-
+#clearFilters:hover
+{
+    background-color: #94c296;
+    color: white;
+}
 
 .table button
 {
@@ -527,5 +550,15 @@
     {
         width: 80%;
         margin: 10px auto;
+    }
+
+    .filters-tab
+    {
+        max-height: 70%;
+    }
+    .filters
+    {
+        max-height: 70vh;
+        overflow-y: auto;
     }
 }

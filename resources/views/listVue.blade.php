@@ -21,31 +21,25 @@
             <input type="text" v-model="search" placeholder="Search">
             <button v-if="search.length" @click="() => {search = ''}"  class="clearSearch">X</button>
         </div>
-        <div class="filterSticky"  v-if="activeFilters.length">
-            <div class="activeFilterPill" v-for="activefilter in activeFilters" :key="activefilter" @click="addFilter(activefilter.type,activefilter.content)"> @{{activefilter.content}}</div>
-            <button @click="clearFilters" id="clearFilters">Clear</button>
-        </div>
-
-
-        <div class="filters" v-if="showFilters">      
-            <div id="filtersRooms" class="dropdown" v-for="filterType in filterTypes" :key="filterType">
-                <div class="filterHeader">@{{filterType.key}}</div>
-                <button class="filterButton "v-for="filter in filterType.value" :key="filter" @click="addFilter(filterType.key,filter)" :class="{activeButton: filterPresent(filterType.key,filter)}">@{{filter}}</button><br>
+        <!-- Filters tab -->  
+          
+        <div class="filters-tab">
+            <div class="filters" v-if="showFilters">      
+                <div id="filtersRooms" class="dropdown" v-for="filterType in filterTypes" :key="filterType">
+                    <div class="filterHeader">@{{filterType.key}}</div>
+                    <button class="filterButton "v-for="filter in filterType.value" :key="filter" @click="addFilter(filterType.key,filter)" :class="{activeButton: filterPresent(filterType.key,filter)}">@{{filter}}</button><br>
+                </div>
             </div>
-            <div>
-                <button @click="clearFilters" id="clearFilters">Clear Filters</button>
+            <div class=""  v-if="activeFilters.length">
+                <div class="activeFilterPill" v-for="activefilter in activeFilters" :key="activefilter" @click="addFilter(activefilter.type,activefilter.content)"> @{{activefilter.content}}</div>
+                <button @click="clearFilters" id="clearFilters">Clear</button>
+            </div>
+            <div>   
+                <button @click="toggleFilters" class="showFilters">@{{showFilters ? "▲ Hide Filters ▲" : "▼ Show Filters ▼"}}  </button>
             </div>
         </div>
-        <div>   
-            <button @click="toggleFilters" class="showFilters">@{{showFilters ? "▲ Hide Filters ▲" : "▼ Show Filters ▼"}}  </button>
-        </div>
 
-
-
-
-
-
-
+        <!-- End of filters -->
 
         <p> Showing @{{filteredData.length}} items</p>
         <!-- Table of items -->
