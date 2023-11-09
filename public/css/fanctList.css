@@ -507,7 +507,7 @@
 
     .filters
     {
-        max-height: 80vh;
+        max-height: 60vh;
         white-space: nowrap;
         position: relative;
         overflow-x: scroll;

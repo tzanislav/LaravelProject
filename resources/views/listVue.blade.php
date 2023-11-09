@@ -22,7 +22,7 @@
             <button v-if="search.length" @click="() => {search = ''}"  class="clearSearch">X</button>
         </div>
         <!-- Filters tab -->  
-          
+
         <div class="filters-tab">
             <div class="filters" v-if="showFilters">      
                 <div id="filtersRooms" class="dropdown" v-for="filterType in filterTypes" :key="filterType">
@@ -35,12 +35,12 @@
                 <button @click="clearFilters" id="clearFilters">Clear</button>
             </div>
             <div>   
-                <button @click="toggleFilters" class="showFilters">@{{showFilters ? "▲ Hide Filters ▲" : "▼ Show Filters ▼"}}  </button>
+                <button ref="showFilters" @click="toggleFilters" class="showFilters">@{{showFilters ? "▲ Hide Filters ▲" : "▼ Show Filters ▼"}}  </button>
             </div>
         </div>
 
         <!-- End of filters -->
-
+        <br><br><br>
         <p> Showing @{{filteredData.length}} items</p>
         <!-- Table of items -->
         <div class="table" v-if="filteredData.length">

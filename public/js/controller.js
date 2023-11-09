@@ -25,6 +25,12 @@ const app = Vue.createApp({
     //GUI methods
     toggleFilters() {
       this.showFilters = !this.showFilters;
+  
+      if (this.showFilters) {
+        // Use $refs to get a reference to the showFilters button
+        let showButton = this.$refs.showFilters;
+        showButton.scrollIntoView({behavior: 'smooth'});
+      }
     }
     ,
     clearFilters() {
