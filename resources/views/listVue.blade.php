@@ -40,8 +40,13 @@
         </div>
 
         <!-- End of filters -->
+
+
         <br><br><br>
         <p> Showing @{{filteredData.length}} items</p>
+
+
+
         <!-- Table of items -->
         <div class="table" v-if="filteredData.length">
             <div v-for="(item, index) in filteredData" :key="item.id" class="tableItem" >
@@ -51,7 +56,8 @@
                     <hr/>
                 </div>
 
-                <div class="fancy_table_item">
+                <div class="fancy_table_item" :style="{ 'border': '1px solid ' + activeColor(item.status)[0] }">
+
 
                     <div class="table_section" id="itemImage">
                         <img :src =item.image @click = "editItem(item)">
@@ -87,10 +93,8 @@
                     </div>
                     @endif
                     @endif
-                    <div class="table_section" id="statusBar" :style="{ 'background-color': activeColor(item.status)[0]}" @click = "editItem(item)">
-                        <h5>Status</h5>
+                    <div class="table_section" id="statusBar" :style="{ 'background-color': activeColor(item.status)[0]}"  @click = "editItem(item)">
                         <h2 :style= "{color :  activeColor(item.status)[1]}">@{{item.status}}</h2>
-                        <br>
                     </div>
                 </div>
             </div>
