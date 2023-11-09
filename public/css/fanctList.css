@@ -1,25 +1,22 @@
-.main_content
-{
+.main_content {
     max-width: 1000px;
     background-color: white;
     border-radius: 8px;
     margin: 0 auto;
     padding: 24px;
 }
-.table
-{
+
+.table {
     max-width: min(1200px, 90%);
     margin: 0 auto;
 }
 
-#app
-{
+#app {
     text-align: center;
     transition: all linear 0.3s;
 }
 
-.addItemButtons
-{
+.addItemButtons {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,13 +29,11 @@
     cursor: pointer;
 }
 
-.addItemButtons:hover
-{
+.addItemButtons:hover {
     background-color: #94c296;
 }
 
-.addItemButtons img
-{
+.addItemButtons img {
     width: 32px;
     height: 32px;
     margin: 0;
@@ -46,8 +41,7 @@
     cursor: pointer;
 }
 
-.addItemButtons p
-{
+.addItemButtons p {
     background: none;
     border: none;
     font-size: 16px;
@@ -55,31 +49,28 @@
     vertical-align: middle;
 }
 
-.filters-tab
-{
+.filters-tab {
     filter: drop-shadow(0px 5px 2px rgb(163, 163, 163));
     background: white;
     position: sticky;
     top: 0px;
     z-index: 1000;
-    
+
 
 }
 
-.filters
-{
+.filters {
     max-width: 90%;
-    margin: 50px auto; 
+    margin: 50px auto;
     text-align: center;
     background: white;
-    max-height: 80%;   
-    
+    max-height: 80%;
+
 }
 
 
 
-.filters button
-{   
+.filters button {
     height: 20px;
     border: none;
     background: none;
@@ -88,11 +79,10 @@
     font-size: 12px;
     margin: 2px 2px;
     cursor: pointer;
-    border-radius: 5px; 
+    border-radius: 5px;
 }
 
-.showFilters
-{   
+.showFilters {
     background-color: white;
     width: 256px;
     height: 32px;
@@ -106,22 +96,20 @@
     z-index: 1001;
 }
 
-.showFilters:hover
-{
+.showFilters:hover {
     background-color: #94c296;
 }
-.showFilters:focus
-{
+
+.showFilters:focus {
     outline: none;
 }
-.showFilters:active
-{
+
+.showFilters:active {
     background-color: #3e8e41;
     color: white;
 }
 
-.activeButton
-{
+.activeButton {
     background: rgb(160, 1, 1);
     background-color: #3e8e41;
     color: rgb(165, 5, 0);
@@ -130,20 +118,18 @@
 
 
 
-.filters button:hover
-{
+.filters button:hover {
     background-color: #94c296;
 }
 
-.dropdown
-{
+.dropdown {
     min-width: 150px;
     margin: 10px 20px;
     vertical-align: top;
     display: inline-block;
 }
-#clearFilters
-{
+
+#clearFilters {
     width: 256px;
     height: 32px;
     text-align: center;
@@ -155,15 +141,13 @@
     color: #414141;
 }
 
-#clearFilters:hover
-{
+#clearFilters:hover {
     background-color: #94c296;
     color: white;
 }
 
-.table button
-{
-    background:none;
+.table button {
+    background: none;
     border: none;
     font-weight: bolder;
     font-size: 12px;
@@ -175,19 +159,17 @@
 
 
 
-.tableItem
-{
+.tableItem {
     margin: 14px 0px;
 }
-.fancy_table_item
-{
+
+.fancy_table_item {
     border: 1px solid rgb(163, 163, 163);
     border-radius: 8px;
     margin: 10px;
 }
 
-.fancy_table_item img
-{
+.fancy_table_item img {
     max-height: 64px;
     max-width: 64px;
     border-radius: 8px;
@@ -195,46 +177,41 @@
     cursor: pointer;
 }
 
-.fancy_table_item h1
-{
+.fancy_table_item h1 {
     color: rgb(0, 0, 0);
     font-size: 16px;
     margin: 0;
     padding: 0;
 }
-.fancy_table_item h2
-{
+
+.fancy_table_item h2 {
     color: rgb(0, 0, 0);
     font-size: 12px;
     margin: 0;
     padding: 0;
 }
 
-.fancy_table_item h5
-{
+.fancy_table_item h5 {
     font-size: 10px;
     margin: 0;
     padding: 0;
     color: rgb(163, 163, 163);
 }
 
-.fancy_table_item button:hover
-{
-    background:none;
+.fancy_table_item button:hover {
+    background: none;
     color: rgb(255, 0, 0);
 }
 
-.table_section
-{
+.table_section {
     display: inline-block;
     vertical-align: top;
     margin: 10px;
-    width:12%;
+    width: 12%;
     min-width: 150px;
 }
 
-.fancy_table_item
-{
+.fancy_table_item {
     font-size: 10px;
     margin: 0;
     padding: 0;
@@ -243,30 +220,29 @@
 
 
 
-.table_buttton_small
-{
+.table_buttton_small {
     font-size: 10px;
     margin: 0;
     padding: 0;
     color: rgb(163, 163, 163);
 }
-.table_buttton_big
-{
+
+.table_buttton_big {
     text-decoration: underline;
     color: rgb(0, 0, 0);
     font-size: 12px;
     margin: 0;
     padding: 0;
 }
-.table_buttton_status
-{
+
+.table_buttton_status {
     font-size: 10px;
     border: 1px solid rgb(163, 163, 163);
     border-radius: 0px;
     width: 100%;
 }
-.table_buttton_room
-{
+
+.table_buttton_room {
     font-size: 12px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     height: 40px;
@@ -277,8 +253,7 @@
     margin: 24px 0px;
 }
 
-#statusBar
-{
+#statusBar {
     height: 40px;
 
     border-radius: 20px;
@@ -289,16 +264,14 @@
     border: solid 1px rgb(224, 224, 224);
 }
 
-#statusBar:hover
-{
+#statusBar:hover {
     border: solid 2px rgb(163, 163, 163);
     color: white;
     cursor: pointer;
 }
 
 
-.editModal
-{
+.editModal {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -308,19 +281,17 @@
     overflow-y: scroll;
 }
 
-.editModal img
-{   
+.editModal img {
     max-width: 128px;
     max-height: 128px;
     margin: 0 auto;
     display: block;
 }
 
-.edit_table_item
-{
+.edit_table_item {
     width: 40%;
     min-height: 50%;
-    
+
     background-color: white;
     border: 1px solid rgb(163, 163, 163);
     border-radius: 8px;
@@ -328,8 +299,7 @@
     padding: 24px;
 }
 
-.edit_table_item button
-{
+.edit_table_item button {
     width: 80%;
     height: 32px;
     border: 1px solid rgb(163, 163, 163);
@@ -343,25 +313,22 @@
 
 }
 
-.edit_table_item button:hover
-{
+.edit_table_item button:hover {
     background-color: rgb(0, 0, 0);
     color: white;
 }
 
-.edit_table_item label
-{
+.edit_table_item label {
     font-size: 12px;
     color: rgb(163, 163, 163);
     display: block;
 }
-.edit_table_item textarea
-{
+
+.edit_table_item textarea {
     width: 80%;
 }
 
-.edit_table_item input
-{
+.edit_table_item input {
     width: 100%;
     height: 32px;
     border: 1px solid rgb(163, 163, 163);
@@ -369,18 +336,17 @@
     margin: 8px 0px;
     padding: 0px 8px;
 }
-.editSection
-{
+
+.editSection {
     margin: 24px;
     width: 70%;
     min-width: 200px;
     display: inline-block;
     vertical-align: top;
-    
+
 }
 
-.editSection img
-{
+.editSection img {
     max-width: 80%;
     max-height: 350px;
     border-radius: 10px;
@@ -388,8 +354,7 @@
     filter: drop-shadow(3px 5px 2px rgb(163, 163, 163));
 }
 
-#editItem_status
-{
+#editItem_status {
     width: 85%;
     height: 50px;
     text-align: center;
@@ -399,8 +364,7 @@
     font-weight: bold;
 }
 
-.error
-{
+.error {
     color: red;
     font-size: 10px;
     margin: 0;
@@ -408,13 +372,11 @@
     display: inline;
 }
 
-.search
-{
+.search {
     margin: 25px auto;
 }
 
-.search input
-{
+.search input {
     height: 24px;
     border-radius: 12px;
     padding: 0px 10px;
@@ -423,8 +385,7 @@
     font-weight: bold;
 }
 
-.clearSearch
-{
+.clearSearch {
     border: solid 2px rgb(58, 58, 58);
     height: 24px;
     width: 24px;
@@ -440,8 +401,7 @@
 
 }
 
-.filterHeader
-{
+.filterHeader {
     text-transform: uppercase;
     font-size: 12px;
     font-weight: bold;
@@ -449,19 +409,17 @@
     margin: 10px 0px;
 }
 
-.filterSticky
-
-{
+.filterSticky {
     position: sticky;
     top: 0;
     width: 100%;
     margin: 00px auto 40px auto;
     padding: 12px 0px;
-    background-color: white;    
+    background-color: white;
     filter: drop-shadow(0px 5px 2px rgb(163, 163, 163));
 }
-.filterSticky button
-{
+
+.filterSticky button {
     display: block;
     margin: 0px 8px;
     padding: 0px 8px;
@@ -475,8 +433,7 @@
 
 }
 
-.activeFilterPill
-{
+.activeFilterPill {
     padding: 3px 16px;
     border-radius: 8px;
     margin: 4px 8px;
@@ -484,81 +441,77 @@
     background-color: rgb(238, 238, 238);
 }
 
-.activeFilterPill:hover
-{
+.activeFilterPill:hover {
     background-color: rgb(163, 163, 163);
     color: white;
     cursor: pointer;
 }
 
-@media only screen and (max-width: 700px)
-{
-    .tableItem
-    {
+@media only screen and (max-width: 700px) {
+    .tableItem {
         width: 100%;
         margin: 16px auto;
     }
 
 
-    #itemImage img
-    {
+    #itemImage img {
         max-height: 64px;
     }
-    #statusBar
-    {
+
+    #statusBar {
         border-radius: 8px;
-    
+
     }
 
-    .table_section
-    {
+    .table_section {
         font-size: 10px;
         min-width: 64px;
     }
 
-    .table_section h1
-    {
-        font-size: inherit;
-    }
-    
-    .table_section h2
-    {
+    .table_section h1 {
         font-size: inherit;
     }
 
-    .table_section h5
-    {
+    .table_section h2 {
         font-size: inherit;
     }
 
-    .edit_table_item
-    {
+    .table_section h5 {
+        font-size: inherit;
+    }
+
+    .edit_table_item {
         width: 90%;
         margin: 50px auto;
 
         padding: 0;
     }
-    .editSection
-    {
+
+    .editSection {
         width: 100%;
 
         margin: 0;
         padding: 0;
     }
 
-    .editSection input
-    {
+    .editSection input {
         width: 80%;
         margin: 10px auto;
     }
 
-    .filters-tab
-    {
+    .filters-tab {
         max-height: 70%;
+
     }
+
     .filters
     {
-        max-height: 70vh;
-        overflow-y: auto;
+        white-space: nowrap;
+        position: relative;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
     }
+
+
 }
